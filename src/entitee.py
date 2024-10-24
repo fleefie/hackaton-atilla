@@ -1,13 +1,11 @@
-from abc import ABC, abstractmethod
 from objet import Objet
 
-class Entitee(ABC):
+class Entitee:
     """
     Défini une entitée. Cette classe est une classe de base et est censée
     être héritée.
     """
 
-    @abstractmethod
     def interaction(self):
         """
         Est censée être écrasée par sa classe héritée!
@@ -18,19 +16,20 @@ class Entitee(ABC):
         self.pos = pos
         self.nom = nom
         self.description = description
+        self.statistiques = statistiques
         self.inventaire = []
-        self.statistiques = {'HP_MAX' : 100,'force': 10,"intelligence" : 10, 'resistance' : 10 } #Stat de base à moduler 
+        self.statistiques = statistiques
 
 
-    def ajouter_inventaire(obj: Objet):
-        pass
+    def ajouter_inventaire(self, obj: Objet):
+        self.inventaire.append(obj)
 
     def utiliser_objet(self, nom: str):
+        indice = 0
         for obj in self.inventaire:
-            if type(obj) != Objet:
-                raise NotImplementedError("Un non-objet est dans l'inventaire!")
             if obj.nom == nom:
-                indice = self.inventaire.index(obj)
-                self.inventaire[indice].utiliser()
-                if self.inventaire[indice].estConsommable:
+                self.inventaire[indice].utiliser(self.inventaire[indice], self)
+                if self.inventaire[indice].consommable:
                     self.inventaire.pop(indice)
+                break
+            indice += 1
