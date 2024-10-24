@@ -1,6 +1,6 @@
-def func():
-    return "test"
+def main():
+    print("Hello, World!")
 
-
-def __main__():
-    func()
+if __name__ == "__main__":
+    main()
+    
