@@ -16,8 +16,9 @@ class Entitee:
         self.pos = pos
         self.nom = nom
         self.description = description
+        self.statistiques = statistiques
         self.inventaire = []
-        self.statistiques = {'HP_MAX' : 100,'force': 10,"intelligence" : 10, 'resistance' : 10 } #Stat de base à moduler 
+        self.statistiques = statistiques
 
 
     def ajouter_inventaire(self, obj: Objet):
