@@ -1,9 +1,9 @@
 Raretes = {
     "commun": 1,
     "peu commun": 2,
-    "rare": 4,
-    "epique": 8,
-    "legendaire": 16
+    "rare": 3,
+    "epique": 4,
+    "legendaire": 5
 }
 
 class Objet():
@@ -49,7 +49,7 @@ class Armure(Objet):
 
 def utiliser_potion(pot, ent):
     if "pv" in ent.statistiques:
-        ent.statistiques["hp"] += 20 * Raretes[pot.rarete]
+        ent.statistiques["hp"] += 20 ** (Raretes[pot.rarete] - 1)
         if ent.statistiques["hp"] >= ent.statistiques["hpmax"]:
             ent.statistiques["hp"] = ent.statistiques["hpmax"]
     else:
