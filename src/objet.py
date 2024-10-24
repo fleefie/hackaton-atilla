@@ -25,10 +25,10 @@ class Objet():
 
 
 class Arme(Objet):
-    def __init__(self, p_nom: str, desc: str, p_prix: int, p_rarete: str, p_restriction_intelligence: int, p_restriction_force: int, p_degat: int, p_dura: int):
+    def __init__(self, p_nom: str, desc: str, p_prix: int, p_rarete: str, p_min_intelligence: int, p_min_force: int, p_degat: int, p_dura: int):
         super().__init__(p_nom, desc, p_prix, p_rarete, False, None)
-        self.restriction_mana = p_restriction_intelligence
-        self.restriction_force = p_restriction_force
+        self.restriction_mana = p_min_intelligence
+        self.restriction_force = p_min_force
         self.degat = p_degat
         self.dura = p_dura
     
@@ -37,10 +37,10 @@ class Arme(Objet):
 
 
 class Armure(Objet):
-    def __init__(self, nom: str, desc: str, prix: int, rarete: str, multiplicateur_degats: float, durabilite: int):
-        super().__init__(nom, desc, prix, rarete, False, None)
-        self.multiplicateur_degats = multiplicateur_degats
-        self.durabilite = durabilite
+    def __init__(self, nom: str, desc: str, p_prix: int, p_rarete: str, p_resistance: float, p_dura: int):
+        super().__init__(nom, desc, p_prix, p_rarete, False, None)
+        self.multiplicateur_degats = p_resistance
+        self.durabilite = p_dura
     
     def __str__(self) -> str:
         return (f"{super().__str__()}, Multiplicateur de dégâts: {self.multiplicateur_degats}, "
@@ -49,7 +49,7 @@ class Armure(Objet):
 
 def utiliser_potion(pot, ent):
     if "pv" in ent.statistiques:
-        ent.statistiques["hp"] += 20 ** (Raretes[pot.rarete] - 1)
+        ent.statistiques["hp"] += 20 * 2**(Raretes[pot.rarete]-1)
         if ent.statistiques["hp"] >= ent.statistiques["hpmax"]:
             ent.statistiques["hp"] = ent.statistiques["hpmax"]
     else:
@@ -58,3 +58,20 @@ def utiliser_potion(pot, ent):
 class Potion(Objet):
     def __init__(self, nom: str, desc: str, prix: int, rarete: str, consommable: bool):
         super().__init__(nom, desc, prix, rarete, consommable, utiliser_potion)
+        
+class Livre(Objet) :
+    def __init__(self, nom: str, desc: str, prix: int, rarete: str, consommable: bool, type_livre : str):
+        super().__init__(nom, desc, prix, rarete, consommable, utiliser_livre)
+        self.type_livre = type_livre
+        
+def utiliser_livre(livre,ent):
+    if not livre.type_livre in ent.statistiques:
+        print(f"l'entité n'a pas de {livre.type_livre}")
+    if livre.type_livre == "force" :
+        ent.statistiques["force"] += 5
+    if livre.type_livre == "intelligence" :
+        ent.statistiques["intelligence"] += 5
+    if livre.type_livre == "hpmax" :
+        ent.statistiques["hpmax"] += 3 
+        
+    

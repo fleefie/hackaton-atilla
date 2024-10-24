@@ -1,0 +1,22 @@
+Joueur : (au debut de la game)
+    HP = 50
+    force = 0
+    intelligence = 0
+    nom 
+    race : humain/elfe/nain
+    classe : guerrier/mage (+10 force au début/+10 intelligence au debut)
+    inventaire=[gourdin ou ]
+
+Potions :
+    Heal :
+        +20hp commun 
+        +40hp peu commun 
+        +80hp rare 
+        +160hp epic 
+        +320hp legendaire 
+    
+Livres :
+    force/intelligence/hp :
+        hp: +3hp perm -> par tranche de 10 potions, prix : 10-20-40-80-160-320-640-1280 gold
+        force : +5 perm -> prix 10-20-40-80-160-320-640-1280
+        intelligence : +5 perm -> prix : 10-20-40-80-160-320-640-1280
