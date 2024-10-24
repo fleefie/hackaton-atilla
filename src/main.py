@@ -1,57 +1,84 @@
-from combat import Combat
-#from competences import Competance
-#from creature import Creature
-#from echoppe import Echoppe
-from joueur import Joueur
-from entitee import Entitee
-#from objet import Objet
-#from pnj import Pnj
-#from race import Race
-#from region import Region
 import pygame
+import random
+from entitee import Entitee
 
-dict_rarete = {"commun" : 1, "peu commun"  : 2, "rare" : 4, "epic" : 8, "legendaire" : 16}
+# Configuration initiale de la carte et de l'affichage
+TAILLE_CARTE = 999  # Taille totale de la carte (999x999)
+TAILLE_ZONE = TAILLE_CARTE // 3  # Taille de chaque zone (333x333)
 
+class Carte:
+    def __init__(self):
+        self.entites = []  # Liste des entités à placer sur la carte
+
+    def ajouter_entitee(self, ent: Entitee):
+        """Ajoute une entité sur la carte."""
+        self.entites.append(ent)
+
+    def afficher_carte(self, screen):
+        """Affiche la carte divisée en 9 zones avec des couleurs différentes et les entités en noir."""
+        # Couleurs des 9 zones
+        couleurs = [
+            (200, 0, 0), (0, 200, 0), (0, 0, 200),
+            (200, 200, 0), (200, 0, 200), (0, 200, 200),
+            (150, 100, 50), (100, 150, 50), (50, 100, 150)
+        ]
+        
+        # Dessiner les 9 zones
+        for row in range(3):
+            for col in range(3):
+                couleur = couleurs[row * 3 + col]
+                pygame.draw.rect(screen, couleur, (col * TAILLE_ZONE, row * TAILLE_ZONE, TAILLE_ZONE, TAILLE_ZONE))
+
+        # Dessiner les entités (en noir)
+        for ent in self.entites:
+            pygame.draw.circle(screen, (0, 0, 0), ent.pos, 5)  # Les entités sont représentées par des cercles noirs
+
+
+# Fonction principale du jeu
 def main():
     pygame.init()
-    SCREEN_WIDTH, SCREEN_HEIGHT = 800, 600
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    pygame.display.set_caption("Jeu de Rôle")
-    clock = pygame.time.Clock()
-    
-    # Création d'un joueur
-    joueur = Joueur(entite=(0, 0), race="Humain", classe="Guerrier")
 
+    # Créer la fenêtre de jeu
+    screen = pygame.display.set_mode((TAILLE_CARTE, TAILLE_CARTE))
+    pygame.display.set_caption("Carte de Jeu avec Entités")
+
+    # Création de la carte et des entités
+    carte = Carte()
+    
+
+    # Ajouter des entités aléatoires avec des statistiques
+    for i in range(100):  # Exemple avec 10 entités
+        pos = (random.randint(0, TAILLE_CARTE - 1), random.randint(0, TAILLE_CARTE - 1))  # Position aléatoire
+        nom = f"Entitee_{i}"  # Nom unique pour chaque entité
+        description = "Une créature mystérieuse"  # Exemple de description
+        statistiques = {
+            'hp': 100,  # Points de vie de base
+            'hpmax': 100,
+            'force': random.randint(5, 15),
+            'intelligence': random.randint(5, 15)
+        }
+        ent = Entitee(pos, nom, description, statistiques)  # Créer une entité avec les arguments corrects
+        carte.ajouter_entitee(ent)
+
+    # Boucle principale du jeu
     running = True
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
 
-        keys = pygame.key.get_pressed()
-        deplacement = (0, 0)
+        # Remplir l'écran (fond)
+        screen.fill((255, 255, 255))  # Blanc
 
-        if keys[pygame.K_z]:  # Z pour avancer (haut)
-            deplacement = (0, -1)
-        if keys[pygame.K_s]:  # S pour reculer (bas)
-            deplacement = (0, 1)
-        if keys[pygame.K_q]:  # Q pour aller à gauche
-            deplacement = (-1, 0)
-        if keys[pygame.K_d]:  # D pour aller à droite
-            deplacement = (1, 0)
+        # Afficher la carte avec les zones et les entités
+        carte.afficher_carte(screen)
 
-        if deplacement != (0, 0):
-            joueur.deplacer(deplacement)
-
-        # Exemple d'utilisation d'un objet
-        if keys[pygame.K_e]:  # E pour utiliser un objet
-            joueur.utiliser_objet("Potion de Vie")  # Remplace par un objet existant dans l'inventaire
-
-        screen.fill((255, 255, 255))  # Efface l'écran
+        # Mettre à jour l'affichage
         pygame.display.flip()
-        clock.tick(60)
 
     pygame.quit()
 
+
+# Démarrage du jeu
 if __name__ == "__main__":
     main()
