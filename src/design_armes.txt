@@ -1,0 +1,137 @@
+Armes : (achetables au forgeron)
+    Gourdin (arme de base a la creation du perso)
+
+        Prix : 0 or (gratuit à l'armurier)
+        Rareté : Commun
+        Intelligence requise : 0
+        Force requise : 0
+        Dégâts : 10
+        Durabilité : 20
+
+    Dague en Fer
+
+        Prix : 50 or
+        Rareté : commun
+        Intelligence requise : 0
+        Force requise : 10
+        Dégâts : 20
+        Durabilité : 30
+
+    Épée Longue
+
+        Prix : 100 or
+        Rareté : Peu commun
+        Intelligence requise : 0
+        Force requise : 20
+        Dégâts : 30
+        Durabilité : 40
+
+    Hache de Guerre
+
+        Prix : 200 or
+        Rareté : peu commun
+        Intelligence requise : 10
+        Force requise : 30
+        Dégâts : 40
+        Durabilité : 50
+
+    Fouet
+
+        Prix : 400 or
+        Rareté : Rare
+        Intelligence requise : 20
+        Force requise : 40
+        Dégâts : 50
+        Durabilité : 60
+
+    Lance de Combat
+
+        Prix : 800 or
+        Rareté : Rare
+        Intelligence requise : 30
+        Force requise : 50
+        Dégâts : 60
+        Durabilité : 70
+
+    Marteau
+
+        Prix : 2000 or
+        Rareté : Épique
+        Intelligence requise : 40
+        Force requise : 60
+        Dégâts : 85
+        Durabilité : 80
+
+Armes de mages : 
+    Bâton de Bois (arme de base à la création du personnage)
+
+        Prix : 0 ou (gratuit à l'alchimiste)
+        Rareté : Commun
+        Intelligence requise : 0
+        Force requise : 0
+        Dégâts : 15
+        Durabilité : 20
+
+    Sceptre de l’Apprenti
+
+        Prix : 50 or
+        Rareté : Commun
+        Intelligence requise : 15
+        Force requise : 0
+        Dégâts : 20
+        Durabilité : 30
+
+    Bâton d’Énergie
+
+        Prix : 100 or
+        Rareté : Peu commun
+        Intelligence requise : 25
+        Force requise : 0
+        Dégâts : 35
+        Durabilité : 40
+
+    Sceptre d’Invocation
+
+        Prix : 200 or
+        Rareté : Peu commun
+        Intelligence requise : 35
+        Force requise : 10
+        Dégâts : 40
+        Durabilité : 50
+
+    Bâton des Arcanes
+
+        Prix : 400 or
+        Rareté : Rare
+        Intelligence requise : 45
+        Force requise : 20
+        Dégâts : 50
+        Durabilité : 60
+
+    Sceptre de l’Ancien
+
+        Prix : 800 or
+        Rareté : Rare
+        Intelligence requise : 55
+        Force requise : 30
+        Dégâts : 70
+        Durabilité : 70
+
+    Bâton Céleste
+
+        Prix : 2000 or
+        Rareté : Épique
+        Intelligence requise : 65
+        Force requise : 40
+        Dégâts : 95
+        Durabilité : 80
+
+
+
+Ban Hammer (5000 degats) : 
+    Prix : pas a vendre donc prix = 0
+    Rareté : Légendaire
+    Intelligence requise : 30
+    Force requise : 30
+    Dégâts : 6969
+    Durabilité : 69

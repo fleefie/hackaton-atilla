@@ -1,0 +1,43 @@
+Armures : (achetables chez l'armurier)
+
+    Armure en Cuir Renforcé
+        Prix : 50 or
+        Rareté : Commun
+        multiplicateur_degats : 0.9
+        Durabilité : 75
+
+    Armure de Mailles
+        Prix : 100 or
+        Rareté : commun
+        multiplicateur_degats : 0.8
+        Durabilité : 100
+
+    Armure de Platine
+        Prix : 200 or
+        Rareté : Peu commun
+        multiplicateur_degats : 0.7
+        Durabilité : 150
+
+    Armure Magique
+        Prix : 400 or
+        Rareté : peu commun
+        multiplicateur_degats : 0.6
+        Durabilité : 200
+
+    Armure du Gardien
+        Prix : 800 or
+        Rareté : Rare
+        multiplicateur_degats : 0.5
+        Durabilité : 250
+
+    Armure d'Obsidienne
+        Prix : 1600 or
+        Rareté : epique
+        multiplicateur_degats : 0.4
+        Durabilité : 300
+
+    Armure de l'Immortel
+        Prix : 5000 or
+        Rareté : Legendaire
+        multiplicateur_degats : 0.3
+        Durabilité : 400
