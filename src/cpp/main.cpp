@@ -3,5 +3,6 @@
 int main() {
   // Call the C function
   my_c_function();
+  affichage();
   return 0;
 }

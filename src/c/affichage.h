@@ -8,7 +8,7 @@ extern "C" {
 #include <stdio.h>
 #include <ncurses.h>
 
-void my_c_function();
+void ecran();
 
 #ifdef __cplusplus
 }
