@@ -1,11 +1,14 @@
 #include "main.h"
-#include "affichage.h"
+#include "classes.h"
 
-void my_c_function() {
+void c_main() {
   initscr();            // Démarre le mode ncurses
   cbreak();             // Désactive la mise en tampon d'entrée
-  noecho();             // Empêche l'affichage des touches pressées
-  curs_set(FALSE);      // Cache le curseur
-  
+  noecho();
+  printf("test\n");
+  Character_c *a_character_test = Character_new(5, 5);
+  printf("%i\n", Character_getx(a_character_test));
+  Character_setx(a_character_test, 10);
+  printf("%i\n", Character_getx(a_character_test));
   // Implementation of the function
 }
