@@ -21,7 +21,7 @@ class Objet():
             self.utiliser = p_fn_utilisation
     
     def __str__(self):
-        return f"{self.nom} (Prix: {self.prix}, Rarete: {self.rarete})"
+        return f"{self.nom} (Prix: {self.prix}, Rarete: {self.rarete}, utilisable: {self.proprietes['utilisable']} (en combat? {self.proprietes['encombat']}))"
 
 
 class Arme(Objet):
@@ -48,8 +48,8 @@ class Armure(Objet):
 
 
 def utiliser_potion(pot, ent):
-    if "pv" in ent.statistiques:
-        ent.statistiques["hp"] += 20 * 2**(Raretes[pot.rarete]-1)
+    if "hp" in ent.statistiques:
+        ent.statistiques["hp"] += 20 * 2**(pot.rarete-1)
         if ent.statistiques["hp"] >= ent.statistiques["hpmax"]:
             ent.statistiques["hp"] = ent.statistiques["hpmax"]
     else:
