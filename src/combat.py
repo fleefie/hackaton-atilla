@@ -1,7 +1,3 @@
-import random
-from entitee import Entitee
-from joueur import Joueur
-
 class Combat:
     def __init__(self, joueur, liste_entites):
         """Initialise un combat avec plusieurs entités."""
@@ -15,17 +11,6 @@ class Combat:
         print(f"{self.joueur.nom} - PV : {self.joueur.hp}")
         for entite in self.liste_entites:
             print(f"{entite.nom} - PV : {entite.hp}")
-
-    def est_vivant(self, entite):
-        """Vérifie si une entité est encore en vie."""
-        return entite.hp > 0
-
-    def obtenir_premiere_cible(self, attaquant):
-        """Retourne la première entité vivante autre que l'attaquant."""
-        for entite in self.liste_entites:
-            if entite != attaquant and self.est_vivant(entite):
-                return entite
-        return None
 
     def tour_joueur(self):
         """Gère le tour du joueur."""
@@ -41,14 +26,14 @@ class Combat:
                 # Si le joueur choisit d'attaquer
                 print("\nCibles disponibles :")
                 for index, entite in enumerate(self.liste_entites):
-                    if self.est_vivant(entite):
+                    if entite.est_vivant():
                         print(f"{index + 1}. {entite.nom} (PV: {entite.hp})")
 
                 # Le joueur choisit une cible
                 while True:
                     try:
                         cible_choisie = int(input("Choisissez une cible à attaquer (entrez un numéro) : ")) - 1
-                        if 0 <= cible_choisie < len(self.liste_entites) and self.est_vivant(self.liste_entites[cible_choisie]):
+                        if 0 <= cible_choisie < len(self.liste_entites) and self.liste_entites[cible_choisie].est_vivant():
                             cible = self.liste_entites[cible_choisie]
                             self.joueur.attaquer(cible)  # Le joueur attaque la cible choisie
                             break
@@ -70,11 +55,11 @@ class Combat:
     def tour_entites(self):
         """Gère le tour des autres entités (ennemis)."""
         for entite in self.liste_entites:
-            if self.est_vivant(entite):
+            if entite.est_vivant():
                 cible = self.joueur  # Les entités attaquent le joueur
                 print(f"{entite.nom} attaque {cible.nom} !")
                 entite.attaquer(cible)  # L'entité attaque le joueur
-                if not self.est_vivant(self.joueur):
+                if not self.joueur.est_vivant():
                     print(f"{self.joueur.nom} a été vaincu !")
                     return False  # Si le joueur est mort, on arrête le combat
         return True
@@ -87,14 +72,12 @@ class Combat:
         action = self.tour_joueur()
 
         if action == 'fuir':
-            # Si le joueur tente de fuir, les ennemis attaquent malgré tout
-            print(f"{self.joueur.nom} a tenté de fuir, mais les ennemis attaquent avant !")
-            self.tour_entites()  # Les ennemis attaquent avant la fin du combat
+            # Si le joueur tente de fuir
             print(f"{self.joueur.nom} a réussi à fuir ! Le combat est terminé.")
             return False  # Le joueur a fui, donc on arrête le combat
 
         # Vérification après l'attaque du joueur
-        if len([e for e in self.liste_entites if self.est_vivant(e)]) == 0:
+        if len([e for e in self.liste_entites if e.est_vivant()]) == 0:
             print(f"\n{self.joueur.nom} a remporté le combat après {self.tour} tours !")
             return False  # Le combat est terminé, le joueur a gagné
 
@@ -113,12 +96,12 @@ class Combat:
         print("Le combat commence !")
         
         # Continue le combat tant que le joueur est vivant et qu'il reste des ennemis
-        while self.est_vivant(self.joueur) and len([e for e in self.liste_entites if self.est_vivant(e)]) > 0:
+        while self.joueur.est_vivant() and len([e for e in self.liste_entites if e.est_vivant()]) > 0:
             if not self.tour_de_combat():
                 break  # Arrête le combat si quelqu'un est mort ou que le joueur a fui
 
         # Vérification finale pour annoncer le gagnant ou la défaite
-        if self.est_vivant(self.joueur):
+        if self.joueur.est_vivant():
             print(f"\n{self.joueur.nom} a survécu et remporté le combat !")
         else:
             print("\nLe joueur a été vaincu.")
