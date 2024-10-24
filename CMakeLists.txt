@@ -13,3 +13,5 @@ file(GLOB CPP_SOURCES "src/cpp/*.cpp")
 
 # Executable target
 add_executable(projet_exe ${C_SOURCES} ${CPP_SOURCES})
+
+target_link_libraries(Hackaton ncurses)
