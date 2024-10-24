@@ -1,12 +1,14 @@
-class Creature:
-    def __init__(self, race: str, force: int, inteligence: int, hp: int, resistance: int):
+from entitee import Entitee
+
+class Creature(Entitee):
+    def __init__(self, race: str, degat: int, hp: int, resistance: int):
         #Construction de la classe créature
         self.race = race  
-        self.force = force  
-        self.inteligence = inteligence  #mana corresponds à un niveau d'habilité pour pouvoir porter une arme
         self.hp = hp 
+        self.degat = degat
         self.resistance = resistance  
-        self.inventaire = [] 
+
+
 
     def __str__(self): #fonction pour afficher
         """Renvoie une représentation sous forme de chaîne de caractères du personnage."""
