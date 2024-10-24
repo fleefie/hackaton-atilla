@@ -1,19 +1,24 @@
 from entitee import Entitee
-dict_rarete = {"commun" : 1, "peu commun"  : 2, "rare" : 4, "epic" : 8, "legendaire" : 16}
-
-
+from objet import Objet
+from sorts import Sort
 
 class Joueur(Entitee):
-    def __init__(self,entite , race :str, classe : str, HP = 100, pos: tuple[int, int], nom: str, description: str, statistiques : dict):
-        super().__init__(pos, nom, description, statistiques, inventaire, statistiques)
-
+    def __init__(self, pos: tuple[int, int], nom: str, description: str, statistiques: dict, lore: dict):
+        super().__init__(pos, nom, description, statistiques)
         
-    def afficher_statistiques(self):
-        print(f"Statistiques de {self.nom} :")
-        for stat, valeur in self.statistiques.items():
-            print(f"{stat.capitalize()} : {valeur}")
+        self.lore = lore
+        self.sorts = []
+        self.equipement = { 
+                           "armure": None,
+                           "arme": None,
+                           }
 
-    def ajouter_objet(self, objet):
-        self.inventaire.append(objet)
-        print(f"{objet} ajouté à l'inventaire.")
+    def ajouter_sort(self, sort: Sort):
+        self.sorts.append(sort)
 
+    def utiliser_sort(self, nom: str, cible: Entitee):
+        indice = 0
+        for sort in self.sorts:
+            if sort.nom == nom:
+                self.sorts[indice].utiliser(self.sorts[indice], cible)
+            indice += 1
