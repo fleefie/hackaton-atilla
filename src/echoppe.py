@@ -1,4 +1,4 @@
-from pnj import Pnj
+from entitee import Pnj
 
 class Echoppe:
     def __init__(self, nom: str, pnj: Pnj, pos: tuple[int, int]):

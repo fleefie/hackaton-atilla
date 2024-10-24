@@ -1,9 +1,12 @@
-class Objet:
+from abc import ABC, abstractmethod
+
+class Objet(ABC):
     def __init__(self, p_nom: str, p_prix: int, p_rarete: str):
         self.nom = p_nom
         self.prix = p_prix
         self.rarete = p_rarete
     
+    @abstractmethod
     def __str__(self):
         return f"{self.nom} (Prix: {self.prix}, Rarete: {self.rarete})"
 
