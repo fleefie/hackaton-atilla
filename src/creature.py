@@ -17,3 +17,4 @@ class Creature:
                 f"Points de vie : {self.hp}\n"
                 f"Résistance : {self.resistance}\n"
                 f"Inventaire : {inventaire_str}")
+
