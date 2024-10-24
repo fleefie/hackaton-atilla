@@ -6,3 +6,6 @@ class Creature:
         self.hp = hp 
         self.resistance = resistance  
         self.inventaire = [] 
+
+
+        
