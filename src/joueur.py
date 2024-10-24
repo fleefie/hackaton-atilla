@@ -1,10 +1,12 @@
+dict_rarete = {"commun" : 1, "peu commun"  : 2, "rare" : 4, "epic" : 8, "legendaire" : 16}
+
+
+
 class Joueur():
-    def __init__(self, HP = 100, nom, race, classe, inventaire=[]):
-        self.nom = nom
+    def __init__(self,entite , race :str, classe : str, HP = 100 ):
+        self.entite = entite
         self.race = race
         self.classe = classe
-        self.inventaire = inventaire
-        self.statistiques = {'HP_MAX' : 100,'force': 10,"intelligence" : 10, 'resistance' : 10 } #Stat de base à moduler 
         self.HP = HP
         
     def afficher_statistiques(self):
@@ -19,8 +21,12 @@ class Joueur():
     def utiliser_objet(self, objet):
         
         if objet in self.inventaire :
+            
             if objet.nom == "potion" : 
-                self.statistiques['HP'] += 20 * dict_rarete[objet.rarete]
-                
-            if objet.nom == ""
+                self.HP += 20 * dict_rarete[objet.rarete]
+                if self.HP > self.statistiques["HP_MAX"] : 
+                    self.HP = self.statistiques["HP_MAX"]
+                 
+            if objet.nom == "livre" :
+                self.
             

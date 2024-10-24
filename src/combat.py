@@ -11,7 +11,7 @@ class Combat:
         """Affiche l'état de chaque entité."""
         print("\nÉtat des entités :")
         for entite in self.liste_entites:
-            print(f"{entite.race} - PV : {entite.hp}")
+            print(f"{entite.nom} - PV : {entite.hp}")
 
     def tour_de_combat(self):
         """Effectue un tour de combat où chaque entité attaque une autre."""
@@ -50,7 +50,7 @@ class Combat:
         # Affiche le vainqueur
         survivants = [e for e in self.liste_entites if e.est_vivant()]
         if len(survivants) == 1:
-            print(f"\n{survivants[0].race} a remporté le combat après {self.tour - 1} tours !")
+            print(f"\n{survivants[0].nom} a remporté le combat après {self.tour - 1} tours !")
         elif len(survivants) == 0:
             print("\nTous les combattants sont morts.")
 

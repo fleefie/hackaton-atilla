@@ -12,11 +12,13 @@ class Entitee:
         """
         raise NotImplementedError("La sous-classe doit implémenter une interaction")
 
-    def __init__(self, pos: tuple[int, int], nom: str, description: str):
+    def __init__(self, pos: tuple[int, int], nom: str, description: str, statistiques : dict):
         self.pos = pos
         self.nom = nom
         self.description = description
         self.inventaire = []
+        self.statistiques = {'HP_MAX' : 100,'force': 10,"intelligence" : 10, 'resistance' : 10 } #Stat de base à moduler 
+
 
     def ajouter_inventaire(self, obj: Objet):
         self.inventaire.append(obj)
