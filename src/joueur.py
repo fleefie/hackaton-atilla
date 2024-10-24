@@ -1,13 +1,12 @@
+from entitee import Entitee
 dict_rarete = {"commun" : 1, "peu commun"  : 2, "rare" : 4, "epic" : 8, "legendaire" : 16}
 
 
 
-class Joueur():
-    def __init__(self,entite , race :str, classe : str, HP = 100 ):
-        self.entite = entite
-        self.race = race
-        self.classe = classe
-        self.HP = HP
+class Joueur(Entitee):
+    def __init__(self,entite , race :str, classe : str, HP = 100, pos: tuple[int, int], nom: str, description: str, statistiques : dict):
+        super().__init__(pos, nom, description, statistiques, inventaire, statistiques)
+
         
     def afficher_statistiques(self):
         print(f"Statistiques de {self.nom} :")
