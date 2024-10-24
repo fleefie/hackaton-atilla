@@ -1,13 +1,6 @@
-#include <stdio.h>    // Pour les entrées et sorties standard (printf, scanf, etc.)
-#include <stdlib.h>   // Pour la gestion de la mémoire dynamique, conversion de types (malloc, free, atoi, etc.)
-#include <string.h>   // Pour la manipulation des chaînes de caractères (strlen, strcpy, strcmp, etc.)
-#include <math.h>     // Pour les fonctions mathématiques (sin, cos, sqrt, pow, etc.)
-#include <ctype.h>    // Pour la manipulation de caractères individuels (isalpha, isdigit, toupper, etc.)
-#include <stdbool.h>  // Pour utiliser les types booléens (true, false, bool)
-#include <limits.h>   // Définit les constantes liées aux types (INT_MAX, CHAR_MIN, etc.)
-#include <float.h>    // Définit les limites des types flottants (FLT_MAX, DBL_MIN, etc.)
-#include <time.h>     // Pour manipuler le temps et la date (time, difftime, etc.)
-#include <errno.h>    // Pour gérer les erreurs (errno, EINVAL, etc.)
-#include <assert.h>   // Pour inclure les assertions (assert())
-#include <stddef.h>   // Définit des types et macros basiques (NULL, size_t, offsetof, etc.)
-#include <stdint.h>   // Définit les types d'entiers à largeur fixe (int8_t, uint32_t, etc.)
+#include "main.h"
+
+void my_c_function() {
+  printf("test\n");
+  // Implementation of the function
+}
