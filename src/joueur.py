@@ -18,15 +18,3 @@ class Joueur():
         self.inventaire.append(objet)
         print(f"{objet} ajouté à l'inventaire.")
 
-    def utiliser_objet(self, objet):
-        
-        if objet in self.inventaire :
-            
-            if objet.nom == "potion" : 
-                self.HP += 20 * dict_rarete[objet.rarete]
-                if self.HP > self.statistiques["HP_MAX"] : 
-                    self.HP = self.statistiques["HP_MAX"]
-                 
-            if objet.nom == "livre" :
-                self.
-            
