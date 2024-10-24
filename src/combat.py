@@ -8,9 +8,9 @@ class Combat:
     def afficher_etat(self):
         """Affiche l'état de chaque entité."""
         print("\nÉtat des entités :")
-        print(f"{self.joueur.nom} - PV : {self.joueur.hp}")
+        print(f"{self.joueur.nom} - PV : {self.joueur.statistiques['hp']}/{self.joueur.statistiques['hpmax']}")
         for entite in self.liste_entites:
-            print(f"{entite.nom} - PV : {entite.hp}")
+            print(f"{entite.nom} - PV : {entite.statistiques['hp']}/{entite.statistiques['hpmax']}")
 
     def tour_joueur(self):
         """Gère le tour du joueur."""
@@ -19,15 +19,16 @@ class Combat:
         # Affichage des options pour le joueur
         while True:
             print("\n1. Attaquer")
-            print("2. S'enfuir")
-            choix = input("Que voulez-vous faire ? (1 pour attaquer, 2 pour s'enfuir) : ")
+            print("2. Utiliser un objet")
+            print("3. S'enfuir")
+            choix = input("Que voulez-vous faire ? (1 pour attaquer, 2 pour utiliser un objet, 3 pour s'enfuir) : ")
 
             if choix == '1':
                 # Si le joueur choisit d'attaquer
                 print("\nCibles disponibles :")
                 for index, entite in enumerate(self.liste_entites):
                     if entite.est_vivant():
-                        print(f"{index + 1}. {entite.nom} (PV: {entite.hp})")
+                        print(f"{index + 1}. {entite.nom} (PV: {entite.statistiques['hp']})")
 
                 # Le joueur choisit une cible
                 while True:
@@ -44,6 +45,24 @@ class Combat:
                 break  # Sortie du choix d'action du joueur
 
             elif choix == '2':
+                # Si le joueur choisit d'utiliser un objet
+                self.joueur.afficher_inventaire()
+                while True:
+                    try:
+                        objet_choisi = int(input("Choisissez un objet à utiliser (entrez un numéro) : ")) - 1
+                        if 0 <= objet_choisi < len(self.joueur.inventaire):
+                            objet = self.joueur.inventaire[objet_choisi]
+                            if objet.utiliser:
+                                objet.utiliser(objet, self.joueur)  # Utilise l'objet sur le joueur
+                                self.joueur.inventaire.pop(objet_choisi)  # Retire l'objet de l'inventaire
+                            break
+                        else:
+                            print("Choix invalide.")
+                    except ValueError:
+                        print("Veuillez entrer un numéro valide.")
+                break
+
+            elif choix == '3':
                 # Si le joueur choisit de s'enfuir
                 print(f"{self.joueur.nom} tente de s'enfuir !")
                 return 'fuir'  # Indique que le joueur a fui
