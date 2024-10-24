@@ -8,14 +8,14 @@ Raretes = {
 
 class Objet():
 
-    def __init__(self, p_nom: str, desc: str, p_prix: int, p_rarete: str, p_consommable: bool, p_fn_utilisation):
+    def __init__(self, p_nom: str, desc: str, p_prix: int, p_rarete: str, proprietes: dict, p_fn_utilisation):
         self.nom = p_nom
         self.desc = desc
         self.prix = p_prix
         self.rarete = 1
+        self.proprietes = proprietes
         if p_rarete in Raretes:
             self.rarete = Raretes[p_rarete] 
-        self.consommable = p_consommable
         self.utiliser = None
         if callable(p_fn_utilisation):
             self.utiliser = p_fn_utilisation
@@ -26,7 +26,7 @@ class Objet():
 
 class Arme(Objet):
     def __init__(self, p_nom: str, desc: str, p_prix: int, p_rarete: str, p_min_intelligence: int, p_min_force: int, p_degat: int, p_dura: int):
-        super().__init__(p_nom, desc, p_prix, p_rarete, False, None)
+        super().__init__(p_nom, desc, p_prix, p_rarete, { "consommable": False, "utilisable": True, "encombat": False }, None)
         self.restriction_mana = p_min_intelligence
         self.restriction_force = p_min_force
         self.degat = p_degat
@@ -38,7 +38,7 @@ class Arme(Objet):
 
 class Armure(Objet):
     def __init__(self, nom: str, desc: str, p_prix: int, p_rarete: str, p_resistance: float, p_dura: int):
-        super().__init__(nom, desc, p_prix, p_rarete, False, None)
+        super().__init__(nom, desc, p_prix, p_rarete, { "consommable": False, "utilisable": True, "encombat": False }, None)
         self.multiplicateur_degats = p_resistance
         self.durabilite = p_dura
     
@@ -56,12 +56,12 @@ def utiliser_potion(pot, ent):
         print("L'entitée n'as pas de PV!")
 
 class Potion(Objet):
-    def __init__(self, nom: str, desc: str, prix: int, rarete: str, consommable: bool):
-        super().__init__(nom, desc, prix, rarete, consommable, utiliser_potion)
+    def __init__(self, nom: str, desc: str, prix: int, rarete: str, proprietes: dict):
+        super().__init__(nom, desc, prix, rarete, proprietes, utiliser_potion)
         
 class Livre(Objet) :
-    def __init__(self, nom: str, desc: str, prix: int, rarete: str, consommable: bool, type_livre : str):
-        super().__init__(nom, desc, prix, rarete, consommable, utiliser_livre)
+    def __init__(self, nom: str, desc: str, prix: int, rarete: str, proprietes: dict, type_livre : str):
+        super().__init__(nom, desc, prix, rarete, proprietes, utiliser_livre)
         self.type_livre = type_livre
         
 def utiliser_livre(livre,ent):
@@ -73,5 +73,3 @@ def utiliser_livre(livre,ent):
         ent.statistiques["intelligence"] += 5
     if livre.type_livre == "hpmax" :
         ent.statistiques["hpmax"] += 3 
-        
-    

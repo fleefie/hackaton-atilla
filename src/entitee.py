@@ -29,7 +29,7 @@ class Entitee:
         for obj in self.inventaire:
             if obj.nom == nom:
                 self.inventaire[indice].utiliser(self.inventaire[indice], self)
-                if self.inventaire[indice].consommable:
+                if self.inventaire[indice].proprietes["consommable"]:
                     self.inventaire.pop(indice)
                 break
             indice += 1
