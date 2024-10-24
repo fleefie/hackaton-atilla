@@ -1,9 +1,9 @@
 Raretes = {
     "commun": 1,
     "peu commun": 2,
-    "rare": 4,
-    "epique": 8,
-    "legendaire": 16
+    "rare": 3,
+    "epique": 4,
+    "legendaire": 5
 }
 
 class Objet():
@@ -49,7 +49,7 @@ class Armure(Objet):
 
 def utiliser_potion(pot, ent):
     if "pv" in ent.statistiques:
-        ent.statistiques["hp"] += 20 * Raretes[pot.rarete]
+        ent.statistiques["hp"] += 20 * 2**(Raretes[pot.rarete]-1)
         if ent.statistiques["hp"] >= ent.statistiques["hpmax"]:
             ent.statistiques["hp"] = ent.statistiques["hpmax"]
     else:
@@ -58,3 +58,20 @@ def utiliser_potion(pot, ent):
 class Potion(Objet):
     def __init__(self, nom: str, desc: str, prix: int, rarete: str, consommable: bool):
         super().__init__(nom, desc, prix, rarete, consommable, utiliser_potion)
+        
+class Livre(Objet) :
+    def __init__(self, nom: str, desc: str, prix: int, rarete: str, consommable: bool, type_livre : str):
+        super().__init__(nom, desc, prix, rarete, consommable, utiliser_livre)
+        self.type_livre = type_livre
+        
+def utiliser_livre(livre,ent):
+    if not livre.type_livre in ent.statistiques:
+        print(f"l'entité n'a pas de {livre.type_livre}")
+    if livre.type_livre == "force" :
+        ent.statistiques["force"] += 5
+    if livre.type_livre == "intelligence" :
+        ent.statistiques["intelligence"] += 5
+    if livre.type_livre == "hpmax" :
+        ent.statistiques["hpmax"] += 3 
+        
+    
