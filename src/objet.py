@@ -25,10 +25,10 @@ class Objet():
 
 
 class Arme(Objet):
-    def __init__(self, p_nom: str, desc: str, p_prix: int, p_rarete: str, p_restriction_intelligence: int, p_restriction_force: int, p_degat: int, p_dura: int):
+    def __init__(self, p_nom: str, desc: str, p_prix: int, p_rarete: str, p_min_intelligence: int, p_min_force: int, p_degat: int, p_dura: int):
         super().__init__(p_nom, desc, p_prix, p_rarete, False, None)
-        self.restriction_mana = p_restriction_intelligence
-        self.restriction_force = p_restriction_force
+        self.restriction_mana = p_min_intelligence
+        self.restriction_force = p_min_force
         self.degat = p_degat
         self.dura = p_dura
     
@@ -37,10 +37,10 @@ class Arme(Objet):
 
 
 class Armure(Objet):
-    def __init__(self, nom: str, desc: str, prix: int, rarete: str, multiplicateur_degats: float, durabilite: int):
-        super().__init__(nom, desc, prix, rarete, False, None)
-        self.multiplicateur_degats = multiplicateur_degats
-        self.durabilite = durabilite
+    def __init__(self, nom: str, desc: str, p_prix: int, p_rarete: str, p_resistance: float, p_dura: int):
+        super().__init__(nom, desc, p_prix, p_rarete, False, None)
+        self.multiplicateur_degats = p_resistance
+        self.durabilite = p_dura
     
     def __str__(self) -> str:
         return (f"{super().__str__()}, Multiplicateur de dégâts: {self.multiplicateur_degats}, "

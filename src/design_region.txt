@@ -1,0 +1,70 @@
+1. Plaines Verdoyantes (Zone facile)
+
+    Sanglier Sauvage
+        HP: 30
+        Résistance: 1 (0% de réduction des dégâts)
+        Dégâts: 5
+        Inventaire : [10 OR]
+
+2. Forêt Sombre (Zone de difficulté modérée)
+
+    Loup Sauvage
+        HP: 50
+        Résistance: 0.9 (10% de réduction des dégâts)
+        Dégâts: 10
+        Inventaire : [20 OR]
+
+3. Cavernes Humides (Zone intermédiaire)
+
+    Golem de Pierre
+        HP: 80
+        Résistance: 0.8 (20% de réduction des dégâts)
+        Dégâts: 15
+        Inventaire : [40 OR]
+
+4. Désert Aride (Zone intermédiaire-avancée)
+
+    Scorpion Géant
+        HP: 100
+        Résistance: 0.7 (30% de réduction des dégâts)
+        Dégâts: 20
+        Inventaire : [80 OR]
+
+5. Ruines Sous-marines (Zone avancée)
+
+    Serpent des Mers
+        HP: 120
+        Résistance: 0.6 (40% de réduction des dégâts)
+        Dégâts: 25
+        Inventaire : [160 OR]
+
+6. Montagnes Gelées (Zone avancée)
+
+    Yéti
+        HP: 150
+        Résistance: 0.5 (50% de réduction des dégâts)
+        Dégâts: 30
+        Inventaire : [320 OR]
+
+7. Marais Brumeux (Zone experte)
+
+    Hydre du Marais
+        HP: 180
+        Résistance: 0.4 (60% de réduction des dégâts)
+        Dégâts: 35
+        Inventaire : [640 OR]
+
+8. Volcan en Éruption (Zone de boss)
+
+    Dragon de Feu
+        HP: 250
+        Résistance: 0.3 (70% de réduction des dégâts)
+        Dégâts: 50
+        Inventaire : [1280 OR]
+
+Boss spawn aléatoire : 
+    El pueblo
+        HP : 1000
+        Résistance : 1
+        Dégats : 100
+        Inventaire : [Déchet supreme (degats 500 légendaire), 5000 OR]
