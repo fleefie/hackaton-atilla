@@ -1,11 +1,10 @@
 from entitee import Entitee
 
 class Creature(Entitee):
-    def __init__(self, race: str, degat: int, hp: int, resistance: int):
+    def __init__(self, race: str, hp: int, resistance: int):
         #Construction de la classe créature
         self.race = race  
         self.hp = hp 
-        self.degat = degat
         self.resistance = resistance  
 
 

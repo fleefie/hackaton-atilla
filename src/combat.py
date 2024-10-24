@@ -22,11 +22,14 @@ class Combat:
                 # Choisir une cible au hasard parmi les autres entités
                 cible = self.choisir_cible(entite)
                 if cible:
-                    entite.attaquer(cible)
+                    entite.attaquer(self, cible)
 
         # Affiche l'état de toutes les entités après chaque tour
         self.afficher_etat()
         self.tour += 1
+
+
+
 
     def choisir_cible(self, attaquant):
         """Choisit une cible vivante au hasard parmi les autres entités."""
