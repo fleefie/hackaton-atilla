@@ -1,125 +1,138 @@
+
+# Classe Combat corrigée
 class Combat:
     def __init__(self, joueur, liste_entites):
-        """Initialise un combat avec plusieurs entités."""
-        self.liste_entites = liste_entites  # Stocke la liste des entités participant au combat
+        self.liste_entites = liste_entites
         self.joueur = joueur
-        self.tour = 1  # Initialise le compteur de tours
+        self.tour = 1
 
     def afficher_etat(self):
-        """Affiche l'état de chaque entité."""
+        """Affiche l'état des entités après chaque tour."""
         print("\nÉtat des entités :")
-        print(f"{self.joueur.nom} - PV : {self.joueur.statistiques['hp']}/{self.joueur.statistiques['hpmax']}")
+        print(f"{self.joueur.nom} - PV : {self.joueur.statistiques['hp']}/{self.joueur.statistiques['hpmax']}, Mana : {self.joueur.statistiques['mana']}")
         for entite in self.liste_entites:
-            print(f"{entite.nom} - PV : {entite.statistiques['hp']}/{entite.statistiques['hpmax']}")
+            if entite.est_vivant():
+                print(f"{entite.nom} - PV : {entite.statistiques['hp']}/{entite.statistiques['hpmax']}")
+            else:
+                print(f"{entite.nom} est mort.")
+
+    def afficher_sorts(self):
+        """Affiche les sorts disponibles pour le joueur."""
+        print("\nSorts disponibles :")
+        for index, sort in enumerate(self.joueur.sorts):
+            print(f"{index + 1}. {sort.nom} (Mana : {sort.mana}, Description : {sort.desc})")
+
+
+
 
     def tour_joueur(self):
-        """Gère le tour du joueur."""
+        """Gère le tour du joueur (attaque, sort, fuite, etc.)."""
         print(f"\n--- Tour {self.tour} : Tour du joueur {self.joueur.nom} ---")
-        
-        # Affichage des options pour le joueur
         while True:
             print("\n1. Attaquer")
-            print("2. Utiliser un objet")
-            print("3. S'enfuir")
-            choix = input("Que voulez-vous faire ? (1 pour attaquer, 2 pour utiliser un objet, 3 pour s'enfuir) : ")
+            print("2. Utiliser un sort")
+            print("3. Utiliser un objet (non implémenté)")
+            print("4. S'enfuir")
+            choix = input("Que voulez-vous faire ? (1 pour attaquer, 2 pour utiliser un sort, 3 pour utiliser un objet, 4 pour s'enfuir) : ")
 
             if choix == '1':
-                # Si le joueur choisit d'attaquer
+                # Attaque simple
                 print("\nCibles disponibles :")
-                for index, entite in enumerate(self.liste_entites):
-                    if entite.est_vivant():
+                cibles_vivantes = [ent for ent in self.liste_entites if ent.est_vivant()]
+                for index, entite in enumerate(cibles_vivantes):
+                    print(f"{index + 1}. {entite.nom} (PV: {entite.statistiques['hp']})")
+
+                # Sélection d'une cible
+                try:
+                    cible_choisie = int(input("Choisissez une cible à attaquer : ")) - 1
+                    cible = cibles_vivantes[cible_choisie]
+                    
+                    # Attaque seulement la cible choisie
+                    self.joueur.attaquer(cible)
+                    
+                except (IndexError, ValueError):
+                    print("Cible invalide. Essayez de nouveau.")
+                    continue
+                break
+            elif choix == '2':
+                # Utiliser un sort
+                self.afficher_sorts()
+                try:
+                    sort_choisi = int(input("Choisissez un sort à utiliser : ")) - 1
+                    sort = self.joueur.sorts[sort_choisi]
+
+                    # Cibles disponibles pour les sorts
+                    cibles_vivantes = [ent for ent in self.liste_entites if ent.est_vivant()]
+                    print("\nCibles disponibles :")
+                    for index, entite in enumerate(cibles_vivantes):
                         print(f"{index + 1}. {entite.nom} (PV: {entite.statistiques['hp']})")
 
-                # Le joueur choisit une cible
-                while True:
-                    try:
-                        cible_choisie = int(input("Choisissez une cible à attaquer (entrez un numéro) : ")) - 1
-                        if 0 <= cible_choisie < len(self.liste_entites) and self.liste_entites[cible_choisie].est_vivant():
-                            cible = self.liste_entites[cible_choisie]
-                            self.joueur.attaquer(cible)  # Le joueur attaque la cible choisie
-                            break
-                        else:
-                            print("Choix invalide ou cible déjà morte.")
-                    except ValueError:
-                        print("Veuillez entrer un numéro valide.")
-                break  # Sortie du choix d'action du joueur
+                    # Sélection d'une cible pour le sort
+                    cible_choisie = int(input("Choisissez une cible pour le sort : ")) - 1
+                    cible = cibles_vivantes[cible_choisie]
 
-            elif choix == '2':
-                # Si le joueur choisit d'utiliser un objet
-                self.joueur.afficher_inventaire()
-                while True:
-                    try:
-                        objet_choisi = int(input("Choisissez un objet à utiliser (entrez un numéro) : ")) - 1
-                        if 0 <= objet_choisi < len(self.joueur.inventaire):
-                            objet = self.joueur.inventaire[objet_choisi]
-                            if objet.utiliser:
-                                objet.utiliser(objet, self.joueur)  # Utilise l'objet sur le joueur
-                                self.joueur.inventaire.pop(objet_choisi)  # Retire l'objet de l'inventaire
-                            break
-                        else:
-                            print("Choix invalide.")
-                    except ValueError:
-                        print("Veuillez entrer un numéro valide.")
+                    # Utilisation du sort sur la cible
+                    self.joueur.utiliser_sort(sort.nom, cible)
+                except (IndexError, ValueError):
+                    print("Choix invalide, réessayez.")
+                    continue
                 break
 
             elif choix == '3':
-                # Si le joueur choisit de s'enfuir
-                print(f"{self.joueur.nom} tente de s'enfuir !")
-                return 'fuir'  # Indique que le joueur a fui
-            else:
-                print("Choix invalide, veuillez recommencer.")
+                print("Utilisation d'objets non implémentée.")
+                break
 
-        return 'attaquer'  # Si le joueur attaque, continue le combat
+            elif choix == '4':
+                print(f"{self.joueur.nom} tente de s'enfuir !")
+                return 'fuir'
+
+            else:
+                print("Choix invalide. Veuillez choisir à nouveau.")
+
+        return 'attaquer'
 
     def tour_entites(self):
-        """Gère le tour des autres entités (ennemis)."""
+        """Gère le tour des ennemis, qui attaquent le joueur."""
         for entite in self.liste_entites:
             if entite.est_vivant():
-                cible = self.joueur  # Les entités attaquent le joueur
+                cible = self.joueur
                 print(f"{entite.nom} attaque {cible.nom} !")
-                entite.attaquer(cible)  # L'entité attaque le joueur
+                entite.attaquer(cible)  # Chaque entité attaque uniquement le joueur
                 if not self.joueur.est_vivant():
                     print(f"{self.joueur.nom} a été vaincu !")
-                    return False  # Si le joueur est mort, on arrête le combat
+                    return False
         return True
 
     def tour_de_combat(self):
-        """Gère un tour de combat complet."""
+        """Gère un tour complet de combat."""
         print(f"\n--- Tour {self.tour} ---")
-
-        # Tour du joueur
         action = self.tour_joueur()
 
         if action == 'fuir':
-            # Si le joueur tente de fuir
             print(f"{self.joueur.nom} a réussi à fuir ! Le combat est terminé.")
-            return False  # Le joueur a fui, donc on arrête le combat
+            return False
 
-        # Vérification après l'attaque du joueur
-        if len([e for e in self.liste_entites if e.est_vivant()]) == 0:
+        # Vérifier si toutes les entités ennemies sont mortes
+        if all(not e.est_vivant() for e in self.liste_entites):
             print(f"\n{self.joueur.nom} a remporté le combat après {self.tour} tours !")
-            return False  # Le combat est terminé, le joueur a gagné
+            return False
 
         # Tour des entités (ennemis)
         if not self.tour_entites():
-            return False  # Le combat est terminé, le joueur a perdu
+            return False
 
-        # Afficher l'état après chaque tour
+        # Affichage de l'état après chaque tour
         self.afficher_etat()
         self.tour += 1
-
         return True
 
     def commencer_combat(self):
-        """Commence le combat et gère les tours jusqu'à ce qu'il ne reste qu'une seule entité en vie ou que le joueur s'enfuie."""
+        """Commence le combat et continue jusqu'à ce qu'il n'y ait plus de participants."""
         print("Le combat commence !")
-        
-        # Continue le combat tant que le joueur est vivant et qu'il reste des ennemis
-        while self.joueur.est_vivant() and len([e for e in self.liste_entites if e.est_vivant()]) > 0:
+        while self.joueur.est_vivant() and any(e.est_vivant() for e in self.liste_entites):
             if not self.tour_de_combat():
-                break  # Arrête le combat si quelqu'un est mort ou que le joueur a fui
+                break
 
-        # Vérification finale pour annoncer le gagnant ou la défaite
         if self.joueur.est_vivant():
             print(f"\n{self.joueur.nom} a survécu et remporté le combat !")
         else:
