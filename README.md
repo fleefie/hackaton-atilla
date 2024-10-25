@@ -8,6 +8,9 @@ Afin de pouvoir éxecuter le jeu, il vous faudra installer pygame et pytmx grâc
 il vous suffit ensuite d'executer le main.py pour vous amuser.
 Si jamais vous ne parvenez pas à installer ces modules, vous pouvez essayer de le faire depuis un environnement virtuel.
 
+## Exécution
+
+lancez ``src/main.py`` pour le RPG. ``src/game.py`` pour le générateur. Veuyez bien lancer ces scripts depuis le dossier racine du git
 
 ## Documentation code : 
 

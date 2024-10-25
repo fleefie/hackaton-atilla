@@ -19,13 +19,13 @@ class Sort():
         self.proprietes = proprietes  # Propriétés comme les dégâts
         
         
-        def __str__(self) : 
-            return f"{self.nom}, sort de rareté {rarete}, qui coute {mana} de mana pour {self.proprietes['degats']}"
+    def __str__(self) : 
+        return f"{self.nom}, sort de rareté {self.rarete}, qui coute {self.mana} de mana pour {self.proprietes['degats']}"
     
     def utiliser(self, sort, liste_ent : list):
         for i in liste_ent:
             i.statistiques['hp'] -= sort.proprietes['degats']
-
+    
 """
 Fonction par défaut du sort.
 TODO: Implémenter différentes fonctions pour différent types de sorts?

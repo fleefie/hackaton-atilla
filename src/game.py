@@ -12,7 +12,6 @@ from objet import Arme
 from objet import Armure
 from race import Race
 from sorts import Sort
-from sorts import utiliser_sort
 from classes import Classe
 from creature import Creature
 from joueur import Joueur
@@ -100,7 +99,7 @@ def game_start():
                 maxcibles = check_entree("Cibles max?", int)
                 dmg = check_entree("Dégats?", int)
                 mana = check_entree("Mana?", int)
-                sorts.append(Sort(nom, description, int(mana), rarete, {"maxcibles": maxcibles, "degats": dmg}, utiliser_sort))
+                sorts.append(Sort(nom, description, int(mana), rarete, {"maxcibles": maxcibles, "degats": dmg}))
                 print(f"Votre sort: {sorts[nmbr]}")
                 nmbr += 1
             case 3:
