@@ -93,7 +93,7 @@ def main():
 
                 # Vérifier si le joueur interagit avec une créature
                 if current_creature:
-                    button_pos = (TAILLE_CARTE - 150, TAILLE_CARTE - 100)
+                    button_pos = (TAILLE_CARTE - 150, TAILLE_CARTE - 50)
                     button_rect = pygame.Rect(button_pos[0], button_pos[1], 140, 40)
                     if button_rect.collidepoint(mouse_pos):
                         current_creature.interaction(joueur)
@@ -138,7 +138,7 @@ def main():
             draw_button(screen, "Interagir", button_pos, 140, 40, (0, 128, 0))
 
         if current_creature:
-            button_pos = (TAILLE_CARTE - 150, TAILLE_CARTE - 100)
+            button_pos = (TAILLE_CARTE - 150, TAILLE_CARTE - 50)
             draw_button(screen, "Combattre", button_pos, 140, 40, (128, 0, 0))
 
         pygame.display.flip()
