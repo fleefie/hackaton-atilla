@@ -9,6 +9,11 @@ class Pnj(Entitee):
         self.dialogue = dialogue
         self.sprite = pygame.image.load(sprite_path).convert_alpha()  # Charger le sprite du PNJ
 
+    
+    def __str__(self):
+        return f"le pnj {self.nom} est à la position {self.pos} {self.stats}"
+    
+
     def draw(self, surface):
         surface.blit(self.sprite, self.pos)  # Dessiner le sprite sur la surface
 
