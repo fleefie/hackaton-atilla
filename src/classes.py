@@ -1,6 +1,6 @@
 from sorts import Sort
 
-class Race:
+class Classe:
     """
     Défini une race
 
