@@ -24,27 +24,16 @@ class Objet():
         return f"{self.nom} (Prix: {self.prix}, Rarete: {self.rarete}, utilisable: {self.proprietes['utilisable']} (en combat? {self.proprietes['encombat']}))"
 
 
-class Arme(Objet):
-    def __init__(self, p_nom: str, desc: str, p_prix: int, p_rarete: str, p_min_intelligence: int, p_min_force: int, p_degat: int, p_dura: int):
-        super().__init__(p_nom, desc, p_prix, p_rarete, { "consommable": False, "utilisable": True, "encombat": False }, None)
-        self.restriction_mana = p_min_intelligence
-        self.restriction_force = p_min_force
-        self.degat = p_degat
-        self.dura = p_dura
-    
-    def __str__(self):
-        return f"{super().__str__()}, Degats: {self.degat}, Durabilite: {self.dura}, Restriction Mana: {self.restriction_mana}, Restriction Force: {self.restriction_force}"
+def equiper_objet(obj, ent):
+    ent.equiper(obj)
 
+class Arme(Objet):
+    def __init__(self, p_nom: str, desc: str, p_prix: int, p_rarete: str, p_min_intelligence: int, p_min_force: int, p_degat: int):
+        super().__init__(p_nom, desc, p_prix, p_rarete, { "consommable": False, "utilisable": True, "encombat": False, "equipable": {"armure": False, "arme": True}, "degats": p_degat, "minintel": p_min_intelligence, "minforce": p_min_force }, equiper_objet)
 
 class Armure(Objet):
-    def __init__(self, nom: str, desc: str, p_prix: int, p_rarete: str, p_resistance: float, p_dura: int):
-        super().__init__(nom, desc, p_prix, p_rarete, { "consommable": False, "utilisable": True, "encombat": False }, None)
-        self.multiplicateur_degats = p_resistance
-        self.durabilite = p_dura
-    
-    def __str__(self) -> str:
-        return (f"{super().__str__()}, Multiplicateur de dégâts: {self.multiplicateur_degats}, "
-                f"Durabilité: {self.durabilite}")
+    def __init__(self, nom: str, desc: str, p_prix: int, p_rarete: str, p_resistance: float):
+        super().__init__(nom, desc, p_prix, p_rarete, { "consommable": False, "utilisable": True, "encombat": False, "equipable":  {"armure": True, "arme": False}, "resistance": p_resistance  }, equiper_objet)
 
 
 def utiliser_potion(pot, ent):

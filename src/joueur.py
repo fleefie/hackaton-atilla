@@ -1,5 +1,4 @@
 from entitee import Entitee
-from objet import Objet
 from sorts import Sort
 
 class Joueur(Entitee):
@@ -8,11 +7,7 @@ class Joueur(Entitee):
         
         self.lore = lore
         self.sorts = []
-        self.equipement = { 
-                           "armure": None,
-                           "arme": None,
-                           }
-
+    
     def ajouter_sort(self, sort: Sort):
         self.sorts.append(sort)
 
