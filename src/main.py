@@ -54,14 +54,15 @@ def main():
     }
 
     statistiques_joueur = {
-            'hp': 100,
-            'hpmax': 100,
-            'mana': 50,
-            'force': 10,
-            'intelligence': 10
-        }
+        'hp': 100,
+        'hpmax': 100,
+        'mana': 50,
+        'force': 10,
+        'intelligence': 10
+    }
+
     # Initialiser le joueur et les créatures
-    joueur = Joueur([TAILLE_CARTE // 2, TAILLE_CARTE // 2], "Lucas", "Guerrier", statistiques_joueur,{})
+    joueur = Joueur([TAILLE_CARTE // 2, TAILLE_CARTE // 2], "Lucas", "Guerrier", statistiques_joueur, {})
 
     # Initialiser les créatures avec des positions aléatoires dans leurs zones
     creatures = []
@@ -107,22 +108,20 @@ def main():
             if event.type == pygame.QUIT:
                 running = False
             
-            if event.type == pygame.MOUSEBUTTONDOWN and current_pnj:
+            if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
-                button_pos = (TAILLE_CARTE - 150, TAILLE_CARTE - 50)
-                button_rect = pygame.Rect(button_pos[0], button_pos[1], 140, 40)
-                
-                if button_rect.collidepoint(mouse_pos):
-                    current_pnj.interaction(joueur)
+                if current_pnj:
+                    button_pos = (TAILLE_CARTE - 150, TAILLE_CARTE - 50)
+                    button_rect = pygame.Rect(button_pos[0], button_pos[1], 140, 40)
+                    if button_rect.collidepoint(mouse_pos):
+                        current_pnj.interaction(joueur)
 
-            if event.type == pygame.MOUSEBUTTONDOWN and current_creature:
-                mouse_pos = pygame.mouse.get_pos()
-                button_pos = (TAILLE_CARTE - 150, TAILLE_CARTE - 100)  # Position du bouton "Combattre"
-                button_rect = pygame.Rect(button_pos[0], button_pos[1], 140, 40)
-                
-                if button_rect.collidepoint(mouse_pos):
-                    combat = Combat(joueur, [current_creature])
-                    combat.commencer_combat(screen)
+                if current_creature:
+                    button_pos = (TAILLE_CARTE - 150, TAILLE_CARTE - 100)  # Position du bouton "Combattre"
+                    button_rect = pygame.Rect(button_pos[0], button_pos[1], 140, 40)
+                    if button_rect.collidepoint(mouse_pos):
+                        combat = Combat(joueur, [current_creature])
+                        combat.commencer_combat(screen)
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_z]:
@@ -161,7 +160,7 @@ def main():
             draw_button(screen, "Interagir", button_pos, 140, 40, (0, 128, 0))
 
         if current_creature:
-            button_pos = (TAILLE_CARTE - 150, TAILLE_CARTE - 50)  # Position du bouton "Combattre"
+            button_pos = (TAILLE_CARTE - 150, TAILLE_CARTE - 100)  # Position du bouton "Combattre"
             draw_button(screen, "Combattre", button_pos, 140, 40, (255, 0, 0))  # Couleur du bouton "Combattre" en rouge
 
         pygame.display.flip()
