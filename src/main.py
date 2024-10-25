@@ -39,7 +39,7 @@ def main():
 
     # Initialiser les créatures
     creatures = [
-        Creature("Goblin", 100, 10) for _ in range(5)
+        Creature("Goblin", 100, 10, {}, {}) for _ in range(5)
     ]
     for creature in creatures:
         creature.x = random.randint(0, TAILLE_CARTE - 50)
