@@ -11,7 +11,7 @@ class Pnj(Entitee):
 
     
     def __str__(self):
-        return f"le pnj {self.nom} est à la position {self.pos} {self.stats}"
+        return f"le pnj {self.nom} est à la position {self.pos} {self.stats}, dialogue : {self.dialogue}"
     
 
     def draw(self, surface):
