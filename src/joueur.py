@@ -1,6 +1,10 @@
 from entitee import Entitee
 from sorts import Sort
 
+
+"""
+Représente notre joueur!
+"""
 class Joueur(Entitee):
     def __init__(self, pos: tuple[int, int], nom: str, description: str, statistiques: dict, lore: dict):
         super().__init__(pos, nom, description, statistiques)
@@ -13,11 +17,16 @@ class Joueur(Entitee):
         lore : {self.lore} "
     
     
-    
-    
+    """
+    Ajoute ``sort`` à l'inventaire des sorts
+    """
     def ajouter_sort(self, sort: Sort):
         self.sorts.append(sort)
 
+
+    """
+    Lien vers la fonction d'utilisation du sort.
+    """
     def utiliser_sort(self, nom: str, cible: Entitee):
         indice = 0
         for sort in self.sorts:

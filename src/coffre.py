@@ -1,6 +1,10 @@
 from entitee import Entitee
 
 
+"""
+Représente un coffre.
+Un coffre peut donner son inventaire au travers de  sa fonction d'interaction.
+"""
 class Coffre(Entitee):
     def __init__(self, pos: tuple[int, int], nom: str, description: str, statistiques: dict, lore: dict):
         super().__init__(pos, nom, description, statistiques)

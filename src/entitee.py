@@ -1,10 +1,17 @@
 from objet import Objet
 
+
+"""
+Défini une entitée. Cette classe est une classe de base et est censée
+être héritée.
+
+Paramètres:
+    - (x, y): position
+    - nom
+    - description
+    - statistiques
+"""
 class Entitee:
-    """
-    Défini une entitée. Cette classe est une classe de base et est censée
-    être héritée.
-    """
 
     def interaction(self, joueur):
         """
@@ -25,15 +32,20 @@ class Entitee:
     def ajouter_inventaire(self, obj: Objet):
         self.inventaire.append(obj)
 
+
     def __str__(self) :
         return "Cette entité est magique et ne peut pas être dans le monde réel \
+                Elle est étrange, et les dieux de ce monde ont probablement fait une \
+                immense erreur si vous parvenez à l'observer. \
             https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+
 
     def retirer_inventaire(self, nom: str):
         indice = 0
         for obj in self.inventaire:
             if obj.nom == nom:
                 self.inventaire.pop(indice)
+
 
     def utiliser_objet(self, nom: str):
         indice = 0
@@ -44,6 +56,7 @@ class Entitee:
                     self.inventaire.pop(indice)
                 break
             indice += 1
+
 
     def equiper(self, obj: Objet):
         if "equipable" in obj.proprietes:

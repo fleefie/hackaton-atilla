@@ -1,9 +1,20 @@
 from entitee import Entitee
 import pygame
-from objet import Armure
-from joueur import Joueur
+
 
 class Pnj(Entitee):
+    """
+    Défini un PNJ. Si il possède "vendeur": true dans ses statistiques, il sera
+    capable de vendre son inventaire.
+
+    Paramètres:
+        - (x, y): position sur la carte
+        - nom: Nom du PNJ
+        - desc: Description du PNJ.
+        - stats: statistiques du PNJ.
+        - dialogue: string contenant le dialogue de bienvenue du PNJ
+        - sprite_path: lien vers le sprite
+    """
     def __init__(self, pos: tuple[int, int], nom: str, desc: str, stats: dict, dialogue: str, sprite_path: str):
         super().__init__(pos, nom, desc, stats)
         self.dialogue = dialogue
@@ -11,11 +22,14 @@ class Pnj(Entitee):
 
     
     def __str__(self):
-        return f"le pnj {self.nom} est à la position {self.pos} {self.stats}, dialogue : {self.dialogue}"
+        return f"{self.nom} est un PNJ, à la position {self.pos}.\n Ses statistiques sont: {self.statistiques}, dialogue : {self.dialogue}"
     
 
+    """
+    Dessine le PNJ sur la surface ``surface``
+    """
     def draw(self, surface):
-        surface.blit(self.sprite, self.pos)  # Dessiner le sprite sur la surface
+        surface.blit(self.sprite, self.pos)
 
     def interaction(self, ent):
         # Afficher la boîte de dialogue
@@ -27,7 +41,10 @@ class Pnj(Entitee):
             for obj in self.inventaire:
                 print(obj)  # TODO CHANGE ME
 
-    
+
+"""
+Permet à ``joueur`` d'acheter ``objet`` à ``pnj``
+"""
 def achat(joueur, pnj, objet):
     
     if joueur.statistiques['argent'] < objet.prix : 
@@ -37,22 +54,10 @@ def achat(joueur, pnj, objet):
         pnj.statistiques['argent'] += objet.prix
         pnj.inventaire.remove(objet)
         joueur.inventaire.append(objet)
-    
+
+
+"""
+Pas mal, non? C'est francais.
+"""
 def vente(joueur, pnj, objet ):
     achat(pnj, joueur, objet)
-    
-"""
-
-joueur = Entitee((0, 0), "nomdel'ent", "une desc", {})
-pnj = Pnj((0,0), "Didier", "maçon",{}, "cc")
-pnj.statistiques['argent'] = 110
-joueur.statistiques['argent'] = 100
-objet = Armure("Grosse Armure jsp", "elle est bien big", 70, "rare", 0.8)
-objet.prix = 110
-pnj.inventaire.append(objet)
-
-achat(joueur,pnj ,objet)
-print("inventaire du joueur",joueur.inventaire)
-print(joueur.statistiques['argent'])
-
-"""

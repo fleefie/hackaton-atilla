@@ -61,6 +61,26 @@ def main():
         'intelligence': 10
     }
 
+    # Définir les zones de spawn pour chaque créature
+    spawn_zones = {
+        "Goblin": ((330, 650), (630, 950)),
+        "Dragon": ((10, 650), (310, 950)),
+        "Demon": ((10, 330), (310, 640)),
+        "Ghost": ((10, 10), (310, 310)),
+        "Goblinking": ((330, 10), (630, 310)),
+        "Orc": ((650, 10), (950, 310)),
+        "Skeleton": ((650, 330), (950, 630)),
+        "Slime": ((650, 650), (950, 950)),
+    }
+
+    statistiques_joueur = {
+        'hp': 100,
+        'hpmax': 100,
+        'mana': 50,
+        'force': 10,
+        'intelligence': 10
+    }
+
     statistiques_ennemi = {
         'hp': 50,
         'hpmax': 50,

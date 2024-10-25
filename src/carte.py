@@ -1,6 +1,9 @@
 from entitee import Entitee
-import random
 
+"""
+Classe représentant la carte. Elle est simplement composée d'une taille max
+donnée par x et y, puis d'un tableau des entités.
+"""
 class Carte:
     def __init__(self, x: int, y: int):
         self.x = x
