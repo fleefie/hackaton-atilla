@@ -1,6 +1,8 @@
 import pygame
 from joueur import Joueur
 from entitee import Entitee
+from objet import utiliser_potion
+from sorts import Sort
 
 class Combat:
     def __init__(self, joueur, liste_entites):
@@ -88,7 +90,7 @@ class Combat:
         screen.blit(titre, (20, 200))
 
         # Affiche les sorts du joueur avec une surbrillance pour le choix actuel
-        for index, sort in enumerate(self.joueur.lore):
+        for index, sort in enumerate(self.joueur.sorts):
             if index == self.current_choice:
                 text = font.render(f"> {sort.nom} (Mana : {sort.mana})", True, (0, 0, 255))
             else:
@@ -111,7 +113,7 @@ class Combat:
         for entite in self.liste_entites:
             if entite.est_vivant():
                 cible = self.joueur
-                self.ajouter_message(f"{entite.nom} attaque {cible.nom} !")
+                
                 entite.attaquer(cible)  # Chaque entité attaque uniquement le joueur
                 if not self.joueur.est_vivant():
                     self.ajouter_message(f"{self.joueur.nom} a été vaincu !")
@@ -210,7 +212,8 @@ class Combat:
                         elif action == 'utiliser_objet':
                             objet = self.choisir_objet_inventaire(screen)  # Affiche et récupère l'objet choisi
                             if objet:
-                                objet.utiliser(self.joueur)  # Utiliser l'objet si un choix est fait
+                                utiliser_potion(objet, self.joueur)
+                                 # Utiliser l'objet si un choix est fait
                                 self.joueur.inventaire.remove(objet)  # Retire l'objet de l'inventaire après utilisation
                                 self.afficher_etat(screen)  # Actualiser l'état après l'utilisation de l'objet
                             
@@ -274,7 +277,7 @@ class Combat:
                     elif event.key == pygame.K_RETURN:
                         cible = cibles_vivantes[self.current_target]
                         self.joueur.attaquer(cible)  # Joueur attaque la cible sélectionnée
-                        self.ajouter_message(f"{self.joueur.nom} attaque {cible.nom} !")
+                        print(f"{self.joueur.nom} attaque {cible.nom} !")
                         if not cible.est_vivant():
                             self.ajouter_message(f"{cible.nom} est vaincu !")
                         running = False  # Terminer la sélection de cible
@@ -297,10 +300,10 @@ class Combat:
                     elif event.key == pygame.K_RETURN:
                         sort = self.joueur.sorts[self.current_choice]
                         if self.joueur.statistiques['mana'] >= sort.mana:
-                            self.joueur.utiliser_sort(sort)
-                            self.ajouter_message(f"{self.joueur.nom} utilise {sort.nom} !")
+                            sort.utiliser(sort, self.liste_entites )
+                            print(f"{self.joueur.nom} utilise {sort.nom} !")
                         else:
-                            self.ajouter_message(f"{self.joueur.nom} n'a pas assez de mana pour utiliser {sort.nom}.")
+                            print(f"{self.joueur.nom} n'a pas assez de mana pour utiliser {sort.nom}.")
                         running = False  # Terminer la sélection de sort
 
             self.afficher_sorts(screen)

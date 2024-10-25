@@ -98,6 +98,8 @@ def utiliser_potion(pot, ent):
         ent.statistiques["hp"] += 20 * 2**(pot.rarete-1)
         if ent.statistiques["hp"] >= ent.statistiques["hpmax"]:
             ent.statistiques["hp"] = ent.statistiques["hpmax"]
+
+        print("Ca a marche lets go!")
     else:
         print("L'entitée n'as pas de PV!")
 

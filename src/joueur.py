@@ -24,13 +24,5 @@ class Joueur(Entitee):
         self.sorts.append(sort)
 
 
-    """
-    Lien vers la fonction d'utilisation du sort.
-    """
-    def utiliser_sort(self, nom: str, cible: Entitee):
-        indice = 0
-        for sort in self.sorts:
-            if sort.nom == nom:
-                self.sorts[indice].utiliser(self.sorts[indice], cible)
-            indice += 1
+
 
