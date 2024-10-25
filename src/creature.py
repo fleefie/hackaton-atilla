@@ -1,14 +1,12 @@
 from entitee import Entitee
-from joueur import Joueur
 from combat import Combat
 import random
 
 class Creature(Entitee):
-    def __init__(self, race: str, hp: int, resistance: int):
+    def __init__(self, pos: tuple[int, int], nom: str, desc: str, stats: dict, lore: dict):
+        super().__init__(pos, nom, desc, stats)
         #Construction de la classe créature
-        self.race = race  
-        self.hp = hp 
-        self.resistance = resistance  
+        self.lore = lore
 
     def interaction(self, joueur):
         """Initialise et lance un combat entre le joueur et la créature."""
@@ -23,11 +21,11 @@ class Creature(Entitee):
     def __str__(self): #fonction pour afficher
         """Renvoie une représentation sous forme de chaîne de caractères du personnage."""
         inventaire_str = ", ".join([arme['nom'] for arme in self.inventaire]) if self.inventaire else "Aucun objet"
-        return (f"Personnage : {self.race}\n"
-                f"Force : {self.force}\n"
-                f"Mana : {self.mana}\n"
-                f"Points de vie : {self.hp}\n"
-                f"Résistance : {self.resistance}\n"
+        return (f"Personnage : {self.lore['race']} {self.lore['classe']}\n"
+                f"Force : {self.statistiques['force']}\n"
+                f"Mana : {self.statistiques['mana']}\n"
+                f"Points de vie : {self.statistiques['hp']}\n"
+                f"Résistance : {self.statistiques['resistance']}\n"
                 f"Inventaire : {inventaire_str}")
 
 """        

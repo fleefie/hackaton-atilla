@@ -6,7 +6,7 @@ class Entitee:
     être héritée.
     """
 
-    def interaction(self):
+    def interaction(self, joueur):
         """
         Est censée être écrasée par sa classe héritée!
         """
