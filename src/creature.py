@@ -29,9 +29,10 @@ class Creature(Entitee):
                 f"Points de vie : {self.hp}\n"
                 f"Résistance : {self.resistance}\n"
                 f"Inventaire : {inventaire_str}")
+
 """        
 creature = Creature("goblin,", 100, 0.5)
-joueur = Joueur((100,100), "lucas", "le goat", {},"et le plus fort")
+joueur = Joueur((100,100), "lucas", "test", {},"test")
 
 creature.interaction(joueur)
 """
