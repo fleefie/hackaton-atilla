@@ -59,3 +59,8 @@ class Entitee:
                 self.equipement["arme"] = obj
                 self.retirer_inventaire(obj.nom)
                 self.statistiques["degats"] = obj.proprietes["degats"]
+
+
+    def est_vivant(self):
+        """Vérifie si l'entité est encore vivante."""
+        return self.statistiques['hp'] > 0

@@ -6,6 +6,7 @@ from entitee import Entitee
 from creature import Creature
 from joueur import Joueur
 from pnj import Pnj
+from combat import Combat
 
 # Configuration initiale
 TAILLE_CARTE = 960
