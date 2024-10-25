@@ -46,9 +46,9 @@ def main():
     ]
 
     pnjs = [
-        Pnj((384, 406), "Forgeron", "Un marchand amical", {"vendeur": True, "argent": 50}, "Bonjour ! Je vends du shit !!", "sprites/shrek.png"),
-        Pnj((560, 406), "Armurier", "Un guide mystérieux", {"vendeur": True}, "Besoin d'un protège couilles ?", "sprites/knight.png"),
-        Pnj((384, 566), "Alchimiste", "Un vieux bougre", {"vendeur": True}, "Un petit champipi ?", "sprites/necromancer.png")
+        Pnj((384, 406), "Forgeron", "Un marchand amical", {"vendeur": True, "argent": 50}, "Bonjour ! Que puis-je faire pour vous ?", "sprites/shrek.png"),
+        Pnj((560, 406), "Armurier", "Un guide mystérieux", {"vendeur": True}, "Bienvenue dans notre monde !", "sprites/knight.png"),
+        Pnj((384, 566), "Alchimiste", "Un vieux bougre", {"vendeur": True}, "Les secrets de cette terre sont puissants.", "sprites/necromancer.png")
     ]
 
     def draw_map(surface):
@@ -75,18 +75,28 @@ def main():
     # Boucle de jeu
     running = True
     current_pnj = None
+    current_creature = None
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
             
-            if event.type == pygame.MOUSEBUTTONDOWN and current_pnj:
+            if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
-                button_pos = (TAILLE_CARTE - 150, TAILLE_CARTE - 50)
-                button_rect = pygame.Rect(button_pos[0], button_pos[1], 140, 40)
                 
-                if button_rect.collidepoint(mouse_pos):
-                    current_pnj.interaction(joueur)
+                # Vérifier si le joueur interagit avec un PNJ
+                if current_pnj:
+                    button_pos = (TAILLE_CARTE - 150, TAILLE_CARTE - 50)
+                    button_rect = pygame.Rect(button_pos[0], button_pos[1], 140, 40)
+                    if button_rect.collidepoint(mouse_pos):
+                        current_pnj.interaction(joueur)
+
+                # Vérifier si le joueur interagit avec une créature
+                if current_creature:
+                    button_pos = (TAILLE_CARTE - 150, TAILLE_CARTE - 100)
+                    button_rect = pygame.Rect(button_pos[0], button_pos[1], 140, 40)
+                    if button_rect.collidepoint(mouse_pos):
+                        current_creature.interaction(joueur)
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_z]:
@@ -108,14 +118,28 @@ def main():
 
         joueur_pos = pygame.Vector2(joueur.pos)
         current_pnj = None
+        current_creature = None
+
+        # Vérification de la proximité avec les PNJs
         for pnj in pnjs:
             pnj_pos = pygame.Vector2(pnj.pos)
             if joueur_pos.distance_to(pnj_pos) < 20:
                 current_pnj = pnj
 
+        # Vérification de la proximité avec les créatures
+        for creature in creatures:
+            creature_pos = pygame.Vector2(creature.pos)
+            if joueur_pos.distance_to(creature_pos) < 20:
+                current_creature = creature
+
+        # Afficher le bouton d'interaction avec les PNJs ou les créatures
         if current_pnj:
             button_pos = (TAILLE_CARTE - 150, TAILLE_CARTE - 50)
             draw_button(screen, "Interagir", button_pos, 140, 40, (0, 128, 0))
+
+        if current_creature:
+            button_pos = (TAILLE_CARTE - 150, TAILLE_CARTE - 100)
+            draw_button(screen, "Combattre", button_pos, 140, 40, (128, 0, 0))
 
         pygame.display.flip()
 
