@@ -30,6 +30,8 @@ def achat(joueur, pnj, objet):
 def vente(joueur, pnj, objet ):
     achat(pnj, joueur, objet)
     
+"""
+
 joueur = Entitee((0, 0), "nomdel'ent", "une desc", {})
 pnj = Pnj((0,0), "Didier", "maçon",{}, "cc")
 pnj.statistiques['argent'] = 110
@@ -41,3 +43,5 @@ pnj.inventaire.append(objet)
 achat(joueur,pnj ,objet)
 print("inventaire du joueur",joueur.inventaire)
 print(joueur.statistiques['argent'])
+
+"""
