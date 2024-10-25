@@ -7,7 +7,7 @@ class Pnj(Entitee):
         super().__init__(pos, nom, desc, stats)
         self.dialogue = dialogue
 
-    def interaction(self):
+    def interaction(self,ent):
         # Afficher la boite de dialogue
         print(self.nom)
         print(self.description)
