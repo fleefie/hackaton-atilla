@@ -1,84 +1,78 @@
 import pygame
-import random
 from entitee import Entitee
-
-# Configuration initiale de la carte et de l'affichage
-TAILLE_CARTE = 999  # Taille totale de la carte (999x999)
-TAILLE_ZONE = TAILLE_CARTE // 3  # Taille de chaque zone (333x333)
-
-class Carte:
-    def __init__(self):
-        self.entites = []  # Liste des entités à placer sur la carte
-
-    def ajouter_entitee(self, ent: Entitee):
-        """Ajoute une entité sur la carte."""
-        self.entites.append(ent)
-
-    def afficher_carte(self, screen):
-        """Affiche la carte divisée en 9 zones avec des couleurs différentes et les entités en noir."""
-        # Couleurs des 9 zones
-        couleurs = [
-            (200, 0, 0), (0, 200, 0), (0, 0, 200),
-            (200, 200, 0), (200, 0, 200), (0, 200, 200),
-            (150, 100, 50), (100, 150, 50), (50, 100, 150)
-        ]
-        
-        # Dessiner les 9 zones
-        for row in range(3):
-            for col in range(3):
-                couleur = couleurs[row * 3 + col]
-                pygame.draw.rect(screen, couleur, (col * TAILLE_ZONE, row * TAILLE_ZONE, TAILLE_ZONE, TAILLE_ZONE))
-
-        # Dessiner les entités (en noir)
-        for ent in self.entites:
-            pygame.draw.circle(screen, (0, 0, 0), ent.pos, 5)  # Les entités sont représentées par des cercles noirs
+from combat import Combat
+from joueur import Joueur  # Classe Joueur héritée d'Entitee ou définie à part
+from sorts import Sort  # Classe pour définir les sorts
+from objet import Objet
 
 
-# Fonction principale du jeu
+def utiliser_eclair(sort, joueur, cible):
+    # Applique des dégâts plus élevés à la cible
+    cible.stats['hp'] -= sort.proprietes['degats']
+
+# Fonctions d'utilisation des sorts
+def utiliser_boule_de_feu(sort, joueur, cible):
+    # Applique des dégâts à la cible
+    cible.stats['hp'] -= sort.proprietes['degats']
+
+# Fonction d'utilisation du sort
+
+
 def main():
     pygame.init()
-
-    # Créer la fenêtre de jeu
-    screen = pygame.display.set_mode((TAILLE_CARTE, TAILLE_CARTE))
-    pygame.display.set_caption("Carte de Jeu avec Entités")
-
-    # Création de la carte et des entités
-    carte = Carte()
     
+    # Créer la fenêtre de jeu
+    screen = pygame.display.set_mode((800, 600))
+    pygame.display.set_caption("Combat Pygame")
 
-    # Ajouter des entités aléatoires avec des statistiques
-    for i in range(100):  # Exemple avec 10 entités
-        pos = (random.randint(0, TAILLE_CARTE - 1), random.randint(0, TAILLE_CARTE - 1))  # Position aléatoire
-        nom = f"Entitee_{i}"  # Nom unique pour chaque entité
-        description = "Une créature mystérieuse"  # Exemple de description
-        statistiques = {
-            'hp': 100,  # Points de vie de base
-            'hpmax': 100,
-            'force': random.randint(5, 15),
-            'intelligence': random.randint(5, 15)
-        }
-        ent = Entitee(pos, nom, description, statistiques)  # Créer une entité avec les arguments corrects
-        carte.ajouter_entitee(ent)
+    # Créer les statistiques du joueur
+    statistiques_joueur = {
+        'hp': 100,
+        'hpmax': 100,
+        'mana': 50,
+        'force': 10,
+        'intelligence': 10
+    }
 
-    # Boucle principale du jeu
-    running = True
-    while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
+    # Création des sorts du joueur (uniquement Boule de Feu et Éclair)
+    sort1 = Sort(
+        "Boule de Feu", 
+        "Projette une boule de feu", 
+        10, 
+        "commune", 
+        {'degats': 30}, 
+        utiliser_boule_de_feu
+    )
 
-        # Remplir l'écran (fond)
-        screen.fill((255, 255, 255))  # Blanc
+    sort3 = Sort(
+        "Éclair", 
+        "Frappe l'ennemi avec un éclair puissant", 
+        15, 
+        "rare", 
+        {'degats': 45}, 
+        utiliser_eclair
+    )
 
-        # Afficher la carte avec les zones et les entités
-        carte.afficher_carte(screen)
+    # Création du joueur avec les deux sorts
+    joueur = Joueur((50, 50), "Héros", "Le protagoniste du jeu", statistiques_joueur, {})
 
-        # Mettre à jour l'affichage
-        pygame.display.flip()
+    # Création des ennemis
+    statistiques_ennemi = {
+        'hp': 50,
+        'hpmax': 50,
+        'mana': 0,
+        'force': 8,
+        'intelligence': 0
+    }
+    ennemi1 = Entitee((300, 200), "Gobelin", "Un petit gobelin", statistiques_ennemi)
+    ennemi2 = Entitee((400, 300), "Orque", "Un puissant orque", statistiques_ennemi)
+    liste_entites = [ennemi1, ennemi2]
+
+    # Lancement du combat
+    combat = Combat(joueur, liste_entites)
+    combat.commencer_combat(screen)
 
     pygame.quit()
 
-
-# Démarrage du jeu
 if __name__ == "__main__":
     main()
