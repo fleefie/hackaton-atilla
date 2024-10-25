@@ -1,5 +1,4 @@
 from objet import Objet
-from objet import Armure
 
 class Entitee:
     """
@@ -56,12 +55,3 @@ class Entitee:
                 self.equipement["arme"] = obj
                 self.retirer_inventaire(obj.nom)
                 self.statistiques["degats"] = obj.proprietes["degats"]
-
-testarm = Armure("Grosse Armure jsp", "elle est bien big", 70, "rare", 0.8)
-testent = Entitee((0, 0), "nomdel'ent", "une desc", {})
-testent.ajouter_inventaire(testarm)
-print(testent.inventaire)
-testent.inventaire[0].utiliser(testent.inventaire[0], testent)
-print(testent.inventaire)
-print(testent.statistiques)
-print(testent.equipement["armure"])

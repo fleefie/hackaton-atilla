@@ -19,6 +19,8 @@ class Objet():
         self.utiliser = None
         if callable(p_fn_utilisation):
             self.utiliser = p_fn_utilisation
+        else:
+            self.utiliser = lambda: None
     
     def __str__(self):
         return f"{self.nom} (Prix: {self.prix}, Rarete: {self.rarete}, utilisable: {self.proprietes['utilisable']} (en combat? {self.proprietes['encombat']}))"
@@ -29,11 +31,35 @@ def equiper_objet(obj, ent):
 
 class Arme(Objet):
     def __init__(self, p_nom: str, desc: str, p_prix: int, p_rarete: str, p_min_intelligence: int, p_min_force: int, p_degat: int):
-        super().__init__(p_nom, desc, p_prix, p_rarete, { "consommable": False, "utilisable": True, "encombat": False, "equipable": {"armure": False, "arme": True}, "degats": p_degat, "minintel": p_min_intelligence, "minforce": p_min_force }, equiper_objet)
+        stats = {
+                "consommable": False, 
+                "utilisable": True, 
+                "encombat": False, 
+                "equipable": {
+                    "armure": False, 
+                    "arme": True
+                    },
+                "degats": p_degat, 
+                "minintel": p_min_intelligence, 
+                "minforce": p_min_force
+                }
+        super().__init__(p_nom, desc, p_prix, p_rarete, stats, equiper_objet)
 
 class Armure(Objet):
-    def __init__(self, nom: str, desc: str, p_prix: int, p_rarete: str, p_resistance: float):
-        super().__init__(nom, desc, p_prix, p_rarete, { "consommable": False, "utilisable": True, "encombat": False, "equipable":  {"armure": True, "arme": False}, "resistance": p_resistance  }, equiper_objet)
+    def __init__(self, nom: str, desc: str, p_prix: int, p_rarete: str, p_resistance: float, minintel: int, minforce: int):
+        stats = { 
+                 "consommable": False, 
+                 "utilisable": True, 
+                 "encombat": False, 
+                 "equipable":  {
+                     "armure": True, 
+                     "arme": False
+                     }, 
+                 "resistance": p_resistance,
+                 "minintel": minintel,
+                 "minforce": minforce
+                 }
+        super().__init__(nom, desc, p_prix, p_rarete, stats, equiper_objet)
 
 
 def utiliser_potion(pot, ent):
