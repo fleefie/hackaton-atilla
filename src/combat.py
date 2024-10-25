@@ -22,9 +22,6 @@ class Combat:
         for index, sort in enumerate(self.joueur.sorts):
             print(f"{index + 1}. {sort.nom} (Mana : {sort.mana}, Description : {sort.desc})")
 
-
-
-
     def tour_joueur(self):
         """Gère le tour du joueur (attaque, sort, fuite, etc.)."""
         print(f"\n--- Tour {self.tour} : Tour du joueur {self.joueur.nom} ---")
