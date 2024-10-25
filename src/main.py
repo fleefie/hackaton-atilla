@@ -34,10 +34,26 @@ def main():
         "Goblin": pygame.image.load("sprites/goblin.png").convert_alpha(),
         "Dragon": pygame.image.load("sprites/dragon.png").convert_alpha(),
     }
-
+    statistiques_joueur = {
+            'hp': 100,
+            'hpmax': 100,
+            'mana': 50,
+            'force': 10,
+            'intelligence': 10
+        }
     # Initialiser le joueur et les créatures
-    joueur = Joueur([TAILLE_CARTE // 2, TAILLE_CARTE // 2], "Lucas", "Guerrier", {"argent": 100}, "Avatar")
+    joueur = Joueur([TAILLE_CARTE // 2, TAILLE_CARTE // 2], "Lucas", "Guerrier", statistiques_joueur,{})
 
+
+       statistiques_ennemi = {
+        'hp': 50,
+        'hpmax': 50,
+        'mana': 0,
+        'force': 8,
+        'intelligence': 0
+    }
+ 
+def __init__(self, pos: tuple[int, int], nom: str, desc: str, stats: dict, lore: dict):
     creatures = [
         Creature((random.randint(0, TAILLE_CARTE - 50), random.randint(0, TAILLE_CARTE - 50)),
                  "Goblin", "Une créature agile", {"hp": 30, "mana": 0, "force": 10, "resistance": 5}, {"race": "Goblin", "classe": "Monstre"}),
@@ -96,7 +112,9 @@ def main():
                     button_pos = (TAILLE_CARTE - 150, TAILLE_CARTE - 100)
                     button_rect = pygame.Rect(button_pos[0], button_pos[1], 140, 40)
                     if button_rect.collidepoint(mouse_pos):
-                        current_creature.interaction(joueur)
+                        combat = Combat(joueur, [current_creature])
+                        combat.commencer_combat(screen)
+                       
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_z]:
