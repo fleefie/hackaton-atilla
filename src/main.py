@@ -1,10 +1,11 @@
 import pygame
-import random
+import pytmx
+import os
 from entitee import Entitee
 
 # Configuration initiale de la carte et de l'affichage
-TAILLE_CARTE = 999  # Taille totale de la carte (999x999)
-TAILLE_ZONE = TAILLE_CARTE // 3  # Taille de chaque zone (333x333)
+TAILLE_CARTE = 960  # Taille totale de la carte (999x999)
+TAILLE_ZONE = TAILLE_CARTE // 3  # Taille de chaque zone (320x320)
 
 class Carte:
     def __init__(self):
@@ -38,44 +39,36 @@ class Carte:
 def main():
     pygame.init()
 
-    # Créer la fenêtre de jeu
+    # Taille de l'écran
     screen = pygame.display.set_mode((TAILLE_CARTE, TAILLE_CARTE))
-    pygame.display.set_caption("Carte de Jeu avec Entités")
 
-    # Création de la carte et des entités
-    carte = Carte()
-    
+    # Charger la carte Tiled
+    print("Chemin actuel :", os.getcwd())
+    tmx_data = pytmx.load_pygame("src/level_data/map.tmx")
 
-    # Ajouter des entités aléatoires avec des statistiques
-    for i in range(100):  # Exemple avec 10 entités
-        pos = (random.randint(0, TAILLE_CARTE - 1), random.randint(0, TAILLE_CARTE - 1))  # Position aléatoire
-        nom = f"Entitee_{i}"  # Nom unique pour chaque entité
-        description = "Une créature mystérieuse"  # Exemple de description
-        statistiques = {
-            'hp': 100,  # Points de vie de base
-            'hpmax': 100,
-            'force': random.randint(5, 15),
-            'intelligence': random.randint(5, 15)
-        }
-        ent = Entitee(pos, nom, description, statistiques)  # Créer une entité avec les arguments corrects
-        carte.ajouter_entitee(ent)
+    # Fonction pour dessiner la carte
+    def draw_map(surface):
+        for layer in tmx_data.visible_layers:
+            if isinstance(layer, pytmx.TiledTileLayer):
+                for x, y, gid in layer:
+                    tile = tmx_data.get_tile_image_by_gid(gid)
+                    if tile:
+                        surface.blit(tile, (x * tmx_data.tilewidth, y * tmx_data.tileheight))
 
-    # Boucle principale du jeu
+    # Boucle de jeu
     running = True
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-
-        # Remplir l'écran (fond)
-        screen.fill((255, 255, 255))  # Blanc
-
-        # Afficher la carte avec les zones et les entités
-        carte.afficher_carte(screen)
-
+        
+        # Dessiner la carte sur l'écran
+        draw_map(screen)
+        
         # Mettre à jour l'affichage
         pygame.display.flip()
 
+    # Quitter Pygame
     pygame.quit()
 
 
