@@ -6,6 +6,7 @@ from entitee import Entitee
 from creature import Creature
 from joueur import Joueur
 from pnj import Pnj
+from combat import Combat
 
 # Configuration initiale
 TAILLE_CARTE = 960
@@ -23,7 +24,6 @@ def draw_button(surface, text, pos, width, height, color):
 def main():
     pygame.init()
     screen = pygame.display.set_mode((TAILLE_CARTE, TAILLE_CARTE))
-    print("Chemin actuel :", os.getcwd())
     tmx_data = pytmx.load_pygame("src/level_data/map.tmx")
 
     # Charger les textures
@@ -53,8 +53,15 @@ def main():
         "Slime": ((650, 650), (950, 950)),
     }
 
-    # Initialiser le joueur
-    joueur = Joueur([TAILLE_CARTE // 2, TAILLE_CARTE // 2], "Lucas", "Guerrier", {"argent": 100}, "Avatar")
+    statistiques_joueur = {
+            'hp': 100,
+            'hpmax': 100,
+            'mana': 50,
+            'force': 10,
+            'intelligence': 10
+        }
+    # Initialiser le joueur et les créatures
+    joueur = Joueur([TAILLE_CARTE // 2, TAILLE_CARTE // 2], "Lucas", "Guerrier", statistiques_joueur,{})
 
     # Initialiser les créatures avec des positions aléatoires dans leurs zones
     creatures = []
@@ -114,7 +121,8 @@ def main():
                 button_rect = pygame.Rect(button_pos[0], button_pos[1], 140, 40)
                 
                 if button_rect.collidepoint(mouse_pos):
-                    print(f"Combat avec {current_creature.nom} !")  # Remplacez par la logique de combat
+                    combat = Combat(joueur, [current_creature])
+                    combat.commencer_combat(screen)
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_z]:
