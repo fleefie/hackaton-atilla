@@ -24,7 +24,6 @@ def draw_button(surface, text, pos, width, height, color):
 def main():
     pygame.init()
     screen = pygame.display.set_mode((TAILLE_CARTE, TAILLE_CARTE))
-    print("Chemin actuel :", os.getcwd())
     tmx_data = pytmx.load_pygame("src/level_data/map.tmx")
 
     # Charger les textures
@@ -34,17 +33,33 @@ def main():
     creature_sprites = {
         "Goblin": pygame.image.load("sprites/goblin.png").convert_alpha(),
         "Dragon": pygame.image.load("sprites/dragon.png").convert_alpha(),
+        "Demon": pygame.image.load("sprites/demon.png").convert_alpha(),
+        "Ghost": pygame.image.load("sprites/ghost.png").convert_alpha(),
+        "Goblinking": pygame.image.load("sprites/goblinKing.png").convert_alpha(),
+        "Orc": pygame.image.load("sprites/orc.png").convert_alpha(),
+        "Skeleton": pygame.image.load("sprites/skeleton.png").convert_alpha(),
+        "Slime": pygame.image.load("sprites/slime.png").convert_alpha(),
     }
-    statistiques_joueur = {
-            'hp': 100,
-            'hpmax': 100,
-            'mana': 50,
-            'force': 10,
-            'intelligence': 10
-        }
-    # Initialiser le joueur et les créatures
-    joueur = Joueur([TAILLE_CARTE // 2, TAILLE_CARTE // 2], "Lucas", "Guerrier", statistiques_joueur,{})
 
+    # Définir les zones de spawn pour chaque créature
+    spawn_zones = {
+        "Goblin": ((330, 650), (630, 950)),
+        "Dragon": ((10, 650), (310, 950)),
+        "Demon": ((10, 330), (310, 640)),
+        "Ghost": ((10, 10), (310, 310)),
+        "Goblinking": ((330, 10), (630, 310)),
+        "Orc": ((650, 10), (950, 310)),
+        "Skeleton": ((650, 330), (950, 630)),
+        "Slime": ((650, 650), (950, 950)),
+    }
+
+    statistiques_joueur = {
+        'hp': 100,
+        'hpmax': 100,
+        'mana': 50,
+        'force': 10,
+        'intelligence': 10
+    }
 
     statistiques_ennemi = {
         'hp': 50,
@@ -52,20 +67,22 @@ def main():
         'mana': 0,
         'force': 8,
         'intelligence': 0
-        }
- 
-def __init__(self, pos: tuple[int, int], nom: str, desc: str, stats: dict, lore: dict):
-    creatures = [
-        Creature((random.randint(0, TAILLE_CARTE - 50), random.randint(0, TAILLE_CARTE - 50)),
-                 "Goblin", "Une créature agile", {"hp": 30, "mana": 0, "force": 10, "resistance": 5}, {"race": "Goblin", "classe": "Monstre"}),
-        Creature((random.randint(0, TAILLE_CARTE - 50), random.randint(0, TAILLE_CARTE - 50)),
-                 "Dragon", "Un monstre imposant", {"hp": 200, "mana": 50, "force": 40, "resistance": 25}, {"race": "Dragon", "classe": "Boss"})
-    ]
+    }
+    # Initialiser le joueur et les créatures
+    joueur = Joueur([TAILLE_CARTE // 2, TAILLE_CARTE // 2], "Lucas", "Guerrier", statistiques_joueur, {})
 
+    # Initialiser les créatures avec des positions aléatoires dans leurs zones
+    creatures = []
+    for creature_name, ((x1, y1), (x2, y2)) in spawn_zones.items():
+        pos = (random.randint(x1, x2), random.randint(y1, y2))
+        creature = Creature(pos, creature_name, "Une créature", {"hp": 30,'hpmax':30, "mana": 0, "force": 10, "resistance": 5}, {"race": creature_name, "classe": "Monstre"})
+        creatures.append(creature)
+
+    # Initialiser les PNJ
     pnjs = [
-        Pnj((384, 406), "Forgeron", "Un marchand amical", {"vendeur": True, "argent": 50}, "Bonjour ! Que puis-je faire pour vous ?", "sprites/shrek.png"),
-        Pnj((560, 406), "Armurier", "Un guide mystérieux", {"vendeur": True}, "Bienvenue dans notre monde !", "sprites/knight.png"),
-        Pnj((384, 566), "Alchimiste", "Un vieux bougre", {"vendeur": True}, "Les secrets de cette terre sont puissants.", "sprites/necromancer.png")
+        Pnj((384, 406), "Forgeron", "Un marchand amical", {"vendeur": True, "argent": 50}, "Bonjour ! Je vends du shit !!", "sprites/shrek.png"),
+        Pnj((560, 406), "Armurier", "Un guide mystérieux", {"vendeur": True}, "Besoin d'un protège couilles ?", "sprites/knight.png"),
+        Pnj((384, 566), "Alchimiste", "Un vieux bougre", {"vendeur": True}, "Un petit champipi ?", "sprites/necromancer.png")
     ]
 
     def draw_map(surface):
@@ -92,7 +109,7 @@ def __init__(self, pos: tuple[int, int], nom: str, desc: str, stats: dict, lore:
     # Boucle de jeu
     running = True
     current_pnj = None
-    current_creature = None
+    current_creature = None  # Ajout d'une variable pour suivre la créature actuelle
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -100,22 +117,18 @@ def __init__(self, pos: tuple[int, int], nom: str, desc: str, stats: dict, lore:
             
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
-                
-                # Vérifier si le joueur interagit avec un PNJ
                 if current_pnj:
                     button_pos = (TAILLE_CARTE - 150, TAILLE_CARTE - 50)
                     button_rect = pygame.Rect(button_pos[0], button_pos[1], 140, 40)
                     if button_rect.collidepoint(mouse_pos):
                         current_pnj.interaction(joueur)
 
-                # Vérifier si le joueur interagit avec une créature
                 if current_creature:
-                    button_pos = (TAILLE_CARTE - 150, TAILLE_CARTE - 100)
+                    button_pos = (TAILLE_CARTE - 150, TAILLE_CARTE - 100)  # Position du bouton "Combattre"
                     button_rect = pygame.Rect(button_pos[0], button_pos[1], 140, 40)
                     if button_rect.collidepoint(mouse_pos):
                         combat = Combat(joueur, [current_creature])
                         combat.commencer_combat(screen)
-                       
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_z]:
@@ -137,28 +150,25 @@ def __init__(self, pos: tuple[int, int], nom: str, desc: str, stats: dict, lore:
 
         joueur_pos = pygame.Vector2(joueur.pos)
         current_pnj = None
-        current_creature = None
-
-        # Vérification de la proximité avec les PNJs
+        current_creature = None  # Réinitialisation à chaque boucle
         for pnj in pnjs:
             pnj_pos = pygame.Vector2(pnj.pos)
             if joueur_pos.distance_to(pnj_pos) < 20:
                 current_pnj = pnj
 
-        # Vérification de la proximité avec les créatures
         for creature in creatures:
             creature_pos = pygame.Vector2(creature.pos)
             if joueur_pos.distance_to(creature_pos) < 20:
                 current_creature = creature
 
-        # Afficher le bouton d'interaction avec les PNJs ou les créatures
+        # Affichage des boutons d'interaction
         if current_pnj:
             button_pos = (TAILLE_CARTE - 150, TAILLE_CARTE - 50)
             draw_button(screen, "Interagir", button_pos, 140, 40, (0, 128, 0))
 
         if current_creature:
-            button_pos = (TAILLE_CARTE - 150, TAILLE_CARTE - 100)
-            draw_button(screen, "Combattre", button_pos, 140, 40, (128, 0, 0))
+            button_pos = (TAILLE_CARTE - 150, TAILLE_CARTE - 100)  # Position du bouton "Combattre"
+            draw_button(screen, "Combattre", button_pos, 140, 40, (255, 0, 0))  # Couleur du bouton "Combattre" en rouge
 
         pygame.display.flip()
 

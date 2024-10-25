@@ -64,3 +64,11 @@ class Entitee:
     def est_vivant(self):
         """Vérifie si l'entité est encore vivante."""
         return self.statistiques['hp'] > 0
+    
+    def attaquer(self, cible):
+        """L'entité attaque une autre entité."""
+        degats = self.statistiques['force']
+        cible.statistiques['hp'] -= degats
+        if cible.statistiques['hp'] < 0:
+            cible.statistiques['hp'] = 0
+        print(f"{self.nom} attaque {cible.nom} pour {degats} dégâts !")
