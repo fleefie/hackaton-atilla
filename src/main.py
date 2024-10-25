@@ -5,11 +5,11 @@ import random
 from entitee import Entitee
 from creature import Creature
 from joueur import Joueur
-from pnj import Pnj  # Importer la classe PNJ
+from pnj import Pnj
 
-# Configuration initiale de la carte et de l'affichage
-TAILLE_CARTE = 960  # Taille totale de la carte (960x960)
-VITESSE_JOUEUR = 0.8  # Vitesse réduite de déplacement du joueur en pixels
+# Configuration initiale
+TAILLE_CARTE = 960
+VITESSE_JOUEUR = 0.8
 
 # Fonction pour dessiner un bouton
 def draw_button(surface, text, pos, width, height, color):
@@ -19,40 +19,38 @@ def draw_button(surface, text, pos, width, height, color):
     text_rect = text_surface.get_rect(center=(pos[0] + width // 2, pos[1] + height // 2))
     surface.blit(text_surface, text_rect)
 
-# Fonction principale du jeu
+# Fonction principale
 def main():
     pygame.init()
-
-    # Taille de l'écran
     screen = pygame.display.set_mode((TAILLE_CARTE, TAILLE_CARTE))
-
-    # Charger la carte Tiled
     print("Chemin actuel :", os.getcwd())
     tmx_data = pytmx.load_pygame("src/level_data/map.tmx")
 
-    # Charger la texture du joueur
+    # Charger les textures
     player_texture = pygame.image.load("sprites/fHero.png").convert_alpha()
-    player_texture = pygame.transform.scale(player_texture, (16, 16))  # Redimensionne l'image à 16x16 pixels
+    player_texture = pygame.transform.scale(player_texture, (16, 16))
 
-    # Initialiser le joueur au centre de la carte
+    creature_sprites = {
+        "Goblin": pygame.image.load("sprites/goblin.png").convert_alpha(),
+        "Dragon": pygame.image.load("sprites/dragon.png").convert_alpha(),
+    }
+
+    # Initialiser le joueur et les créatures
     joueur = Joueur([TAILLE_CARTE // 2, TAILLE_CARTE // 2], "Lucas", "Guerrier", {"argent": 100}, "Avatar")
 
-    # Initialiser les créatures
     creatures = [
-        Creature("Goblin", 100, 10, {}, {}) for _ in range(5)
+        Creature((random.randint(0, TAILLE_CARTE - 50), random.randint(0, TAILLE_CARTE - 50)),
+                 "Goblin", "Une créature agile", {"hp": 30, "mana": 0, "force": 10, "resistance": 5}, {"race": "Goblin", "classe": "Monstre"}),
+        Creature((random.randint(0, TAILLE_CARTE - 50), random.randint(0, TAILLE_CARTE - 50)),
+                 "Dragon", "Un monstre imposant", {"hp": 200, "mana": 50, "force": 40, "resistance": 25}, {"race": "Dragon", "classe": "Boss"})
     ]
-    for creature in creatures:
-        creature.x = random.randint(0, TAILLE_CARTE - 50)
-        creature.y = random.randint(0, TAILLE_CARTE - 50)
 
-    # Initialiser les PNJ avec leurs propres sprites
     pnjs = [
-        Pnj((384, 406), "Forgeron", "Un marchand amical", {"vendeur": True, "argent": 50}, "Bonjour ! Que puis-je faire pour vous ?", "sprites/shrek.png"),
-        Pnj((560, 406), "Armurier", "Un guide mystérieux", {"vendeur": True}, "Bienvenue dans notre monde !", "sprites/knight.png"),
-        Pnj((384, 566), "Alchimiste", "Un vieux bougre", {"vendeur": True}, "Les secrets de cette terre sont puissants.", "sprites/necromancer.png")
+        Pnj((384, 406), "Forgeron", "Un marchand amical", {"vendeur": True, "argent": 50}, "Bonjour ! Je vends du shit !!", "sprites/shrek.png"),
+        Pnj((560, 406), "Armurier", "Un guide mystérieux", {"vendeur": True}, "Besoin d'un protège couilles ?", "sprites/knight.png"),
+        Pnj((384, 566), "Alchimiste", "Un vieux bougre", {"vendeur": True}, "Un petit champipi ?", "sprites/necromancer.png")
     ]
 
-    # Fonction pour dessiner la carte
     def draw_map(surface):
         for layer in tmx_data.visible_layers:
             if isinstance(layer, pytmx.TiledTileLayer):
@@ -61,19 +59,18 @@ def main():
                     if tile:
                         surface.blit(tile, (x * tmx_data.tilewidth, y * tmx_data.tileheight))
 
-    # Fonction pour dessiner les créatures
     def draw_creatures(surface):
         for creature in creatures:
-            pygame.draw.circle(surface, (255, 0, 0), (creature.x, creature.y), 10)
+            sprite = creature_sprites.get(creature.nom)
+            if sprite:
+                surface.blit(sprite, creature.pos)
 
-    # Fonction pour dessiner le joueur
     def draw_joueur(surface, joueur):
         surface.blit(player_texture, joueur.pos)
 
-    # Fonction pour dessiner les PNJ
     def draw_pnjs(surface):
         for pnj in pnjs:
-            pnj.draw(surface)  # Utiliser la méthode de dessin
+            pnj.draw(surface)
 
     # Boucle de jeu
     running = True
@@ -92,13 +89,13 @@ def main():
                     current_pnj.interaction(joueur)
 
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_z]:  # Haut
+        if keys[pygame.K_z]:
             joueur.pos[1] -= VITESSE_JOUEUR
-        if keys[pygame.K_s]:  # Bas
+        if keys[pygame.K_s]:
             joueur.pos[1] += VITESSE_JOUEUR
-        if keys[pygame.K_q]:  # Gauche
+        if keys[pygame.K_q]:
             joueur.pos[0] -= VITESSE_JOUEUR
-        if keys[pygame.K_d]:  # Droite
+        if keys[pygame.K_d]:
             joueur.pos[0] += VITESSE_JOUEUR
 
         joueur.pos[0] = max(0, min(joueur.pos[0], TAILLE_CARTE - 16))
