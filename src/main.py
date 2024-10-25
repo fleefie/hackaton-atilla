@@ -34,8 +34,8 @@ def main():
     player_texture = pygame.image.load("sprites/fHero.png").convert_alpha()
     player_texture = pygame.transform.scale(player_texture, (16, 16))  # Redimensionne l'image à 16x16 pixels
 
-    # Initialiser le joueur
-    joueur = Joueur([100, 100], "Lucas", "Guerrier", {"argent": 100}, "Avatar")
+    # Initialiser le joueur au centre de la carte
+    joueur = Joueur([TAILLE_CARTE // 2, TAILLE_CARTE // 2], "Lucas", "Guerrier", {"argent": 100}, "Avatar")
 
     # Initialiser les créatures
     creatures = [
@@ -47,9 +47,9 @@ def main():
 
     # Initialiser les PNJ avec leurs propres sprites
     pnjs = [
-    Pnj((384, 406), "Forgeron", "Un marchand amical", {"vendeur": True, "argent": 50}, "Bonjour ! Que puis-je faire pour vous ?", "sprites/shrek.png"),
-    Pnj((560, 406), "Armurier", "Un guide mystérieux", {"vendeur": False}, "Bienvenue dans notre monde !", "sprites/knight.png"),
-    Pnj((384, 566), "Alchimiste", "Un vieux bougre", {"vendeur": False}, "Les secrets de cette terre sont puissants.", "sprites/necromancer.png")
+        Pnj((384, 406), "Forgeron", "Un marchand amical", {"vendeur": True, "argent": 50}, "Bonjour ! Que puis-je faire pour vous ?", "sprites/shrek.png"),
+        Pnj((560, 406), "Armurier", "Un guide mystérieux", {"vendeur": True}, "Bienvenue dans notre monde !", "sprites/knight.png"),
+        Pnj((384, 566), "Alchimiste", "Un vieux bougre", {"vendeur": True}, "Les secrets de cette terre sont puissants.", "sprites/necromancer.png")
     ]
 
     # Fonction pour dessiner la carte
