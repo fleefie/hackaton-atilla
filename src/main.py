@@ -35,7 +35,7 @@ def main():
         "Dragon": pygame.image.load("sprites/dragon.png").convert_alpha(),
         "Demon": pygame.image.load("sprites/demon.png").convert_alpha(),
         "Ghost": pygame.image.load("sprites/ghost.png").convert_alpha(),
-        "Goblinking": pygame.image.load("sprites/goblinking.png").convert_alpha(),
+        "Goblinking": pygame.image.load("sprites/goblinKing.png").convert_alpha(),
         "Orc": pygame.image.load("sprites/orc.png").convert_alpha(),
         "Skeleton": pygame.image.load("sprites/skeleton.png").convert_alpha(),
         "Slime": pygame.image.load("sprites/slime.png").convert_alpha(),
