@@ -7,34 +7,6 @@ from entitee import Entitee
 TAILLE_CARTE = 960  # Taille totale de la carte (999x999)
 TAILLE_ZONE = TAILLE_CARTE // 3  # Taille de chaque zone (320x320)
 
-class Carte:
-    def __init__(self):
-        self.entites = []  # Liste des entités à placer sur la carte
-
-    def ajouter_entitee(self, ent: Entitee):
-        """Ajoute une entité sur la carte."""
-        self.entites.append(ent)
-
-    def afficher_carte(self, screen):
-        """Affiche la carte divisée en 9 zones avec des couleurs différentes et les entités en noir."""
-        # Couleurs des 9 zones
-        couleurs = [
-            (200, 0, 0), (0, 200, 0), (0, 0, 200),
-            (200, 200, 0), (200, 0, 200), (0, 200, 200),
-            (150, 100, 50), (100, 150, 50), (50, 100, 150)
-        ]
-        
-        # Dessiner les 9 zones
-        for row in range(3):
-            for col in range(3):
-                couleur = couleurs[row * 3 + col]
-                pygame.draw.rect(screen, couleur, (col * TAILLE_ZONE, row * TAILLE_ZONE, TAILLE_ZONE, TAILLE_ZONE))
-
-        # Dessiner les entités (en noir)
-        for ent in self.entites:
-            pygame.draw.circle(screen, (0, 0, 0), ent.pos, 5)  # Les entités sont représentées par des cercles noirs
-
-
 # Fonction principale du jeu
 def main():
     pygame.init()
