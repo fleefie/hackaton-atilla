@@ -5,6 +5,9 @@ class Coffre(Entitee):
     def __init__(self, pos: tuple[int, int], nom: str, description: str, statistiques: dict, lore: dict):
         super().__init__(pos, nom, description, statistiques)
     
+    def __str__(self):
+        return f"{self.nom} est un très joli coffre "
+    
     def interaction(self, ent): 
         print(self.nom)
         print(self.description)

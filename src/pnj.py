@@ -6,6 +6,9 @@ class Pnj(Entitee):
     def __init__(self, pos: tuple[int, int], nom: str, desc: str, stats: dict, dialogue: str):
         super().__init__(pos, nom, desc, stats)
         self.dialogue = dialogue
+    
+    def __str__(self):
+        return f"le pnj {self.nom} est à la position {self.pos} {self.stats}"   
 
     def interaction(self,ent):
         # Afficher la boite de dialogue

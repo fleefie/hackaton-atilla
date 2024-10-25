@@ -33,7 +33,10 @@ class Sort():
         
         if callable(p_fn_utilisation):
             self.utiliser = p_fn_utilisation
-
+        
+        def __str__(self) : 
+            return f"Sorts de : {self.nom} de rareté : {rareté}, qui coute {mana} de mana,"
+        
 def utiliser_sort(sort, liste_ent : list):
     for i in liste_ent:
         i.statistiques['hp'] -= sort.proprietes['degats']
