@@ -1,47 +1,35 @@
+"""
+Classe qui représente un sort magique.
 
-
-"""class Sort():
-
-    def __init__(self, p_nom: str, desc: str, mana: int, proprietes: dict, p_fn_utilisation):
-        self.nom = p_nom
-        self.desc = desc
-        self.mana = mana
-        self.rarete = 1
-        self.proprietes = proprietes
-        self.utiliser = None
-        if callable(p_fn_utilisation):
-            self.utiliser = p_fn_utilisation """
-
+Paramètres:
+    - nom: Nom du sort
+    - desc: Description du sort
+    - mana: Coût en mana du sort
+    - rarete: Rarete du sort (commune, rare, épique, etc.)
+    - proprietes: Dictionnaire contenant les propriétés du sort (comme les dégâts)
+    - fn_utilisation: Fonction d'utilisation du sort (doit être callable)
+"""
 class Sort():
-    def __init__(self, p_nom: str, desc: str, mana: int, rarete: str, proprietes: dict, p_fn_utilisation):
-        """
-        Classe qui représente un sort magique.
-        
-        :param p_nom: Nom du sort
-        :param desc: Description du sort
-        :param mana: Coût en mana du sort
-        :param rarete: Rarete du sort (commune, rare, épique, etc.)
-        :param proprietes: Dictionnaire contenant les propriétés du sort (comme les dégâts)
-        :param p_fn_utilisation: Fonction d'utilisation du sort (doit être callable)
-        """
-        self.nom = p_nom
+    def __init__(self, nom: str, desc: str, mana: int, rarete: str, proprietes: dict, fn_utilisation):
+
+        self.nom = nom
         self.desc = desc
         self.mana = mana
         self.rarete = rarete
         self.proprietes = proprietes  # Propriétés comme les dégâts
         self.utiliser = None
         
-        if callable(p_fn_utilisation):
-            self.utiliser = p_fn_utilisation
+        if callable(fn_utilisation):
+            self.utiliser = fn_utilisation
         
         def __str__(self) : 
-            return f"Sorts de : {self.nom} de rareté : {rareté}, qui coute {mana} de mana,"
-        
+            return f"{self.nom}, sort de rareté {rarete}, qui coute {mana} de mana pour {self.proprietes['degats']}"
+
+
+"""
+Fonction par défaut du sort.
+TODO: Implémenter différentes fonctions pour différent types de sorts?
+"""
 def utiliser_sort(sort, liste_ent : list):
     for i in liste_ent:
         i.statistiques['hp'] -= sort.proprietes['degats']
-        
-        
-
-
-

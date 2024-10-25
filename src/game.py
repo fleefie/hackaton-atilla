@@ -200,6 +200,7 @@ def game_start():
                 stre = check_entree("Force ?", int)
                 intl = check_entree("Intelligence ?", int)
                 defn = check_entree("Defense ?", int)
+                hpmax = check_entree("PV ?", int)
                 ALAIDE = 1
                 for classe in classes:
                     print(f"{ALAIDE}: {classe}")
@@ -209,7 +210,7 @@ def game_start():
                     print(f"{ALAIDE}: {race}")
                     ALAIDE += 1
                 racemob = races[1 + int(check_entree("Choisissez la race du mob", int, range(1, nmbr+1, 1)))]
-                mobs.append(Creature((0,0), nom, description, {"force": stre, "intelligence": intl, "resistance": defn}, {"description_longue": desclongue, "classe": classemob, "race": racemob}))
+                mobs.append(Creature((0,0), nom, description, {"force": stre, "intelligence": intl, "resistance": defn, "hpmax": hpmax, "hp": hpmax}, {"description_longue": desclongue, "classe": classemob, "race": racemob}))
                 print(f"Votre mob: {mobs[nmbr]}")
                 nmbr += 1
             case 3:
@@ -230,6 +231,7 @@ def game_start():
     stre = check_entree("Force ?", int)
     intl = check_entree("Intelligence ?", int)
     defn = check_entree("Defense ?", int)
+    hpmax = check_entree("PV ?", int)
     ALAIDE = 1
     for classe in classes:
         print(f"{ALAIDE}: {classe}")
@@ -239,7 +241,7 @@ def game_start():
         print(f"{ALAIDE}: {race}")
         ALAIDE += 1
     racejoueur = races[1 + int(check_entree("Choisissez votre race", int, range(1, nmbr+1, 1)))]
-    joueur = Joueur((0,0), nom, description, {"force": stre, "intelligence": intl, "resistance": defn}, {"classe": classejoueur, "race": racejoueur, "description_longue": desclongue})
+    joueur = Joueur((0,0), nom, description, {"force": stre, "intelligence": intl, "resistance": defn, "hpmax": hpmax, "hp": hpmax}, {"classe": classejoueur, "race": racejoueur, "description_longue": desclongue})
     print(f"Votre joueur: {joueur}")
 
     return [objets, sorts, races, classes, mobs, joueur]
