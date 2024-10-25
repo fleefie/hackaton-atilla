@@ -1,4 +1,5 @@
 from entitee import Entitee
+import random
 
 class Carte:
     def __init__(self, x: int, y: int):
@@ -8,3 +9,5 @@ class Carte:
 
     def ajouter_entitee(self, ent: Entitee):
         self.entites.append(ent)
+    
+        

@@ -17,3 +17,4 @@ class Joueur(Entitee):
             if sort.nom == nom:
                 self.sorts[indice].utiliser(self.sorts[indice], cible)
             indice += 1
+
