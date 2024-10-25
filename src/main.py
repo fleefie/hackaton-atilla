@@ -7,7 +7,6 @@ from creature import Creature
 from joueur import Joueur
 from pnj import Pnj
 from combat import Combat
-from game import game_start
 
 # Configuration initiale
 TAILLE_CARTE = 960
@@ -23,7 +22,6 @@ def draw_button(surface, text, pos, width, height, color):
 
 # Fonction principale
 def main():
-    contenu = game_start()
     pygame.init()
     screen = pygame.display.set_mode((TAILLE_CARTE, TAILLE_CARTE))
     tmx_data = pytmx.load_pygame("src/level_data/map.tmx")
@@ -32,16 +30,17 @@ def main():
     player_texture = pygame.image.load("sprites/fHero.png").convert_alpha()
     player_texture = pygame.transform.scale(player_texture, (16, 16))
 
-    creature_sprites = [pygame.image.load("sprites/goblin.png").convert_alpha(),
-                        pygame.image.load("sprites/dragon.png").convert_alpha(),
-                        pygame.image.load("sprites/demon.png").convert_alpha(),
-                        pygame.image.load("sprites/ghost.png").convert_alpha(),
-                        pygame.image.load("sprites/goblinKing.png").convert_alpha(),
-                        pygame.image.load("sprites/orc.png").convert_alpha(),
-                        pygame.image.load("sprites/skeleton.png").convert_alpha(),
-                        pygame.image.load("sprites/slime.png").convert_alpha()
-                        ]
-    
+    creature_sprites = {
+        "Goblin": pygame.image.load("sprites/goblin.png").convert_alpha(),
+        "Dragon": pygame.image.load("sprites/dragon.png").convert_alpha(),
+        "Demon": pygame.image.load("sprites/demon.png").convert_alpha(),
+        "Ghost": pygame.image.load("sprites/ghost.png").convert_alpha(),
+        "Goblinking": pygame.image.load("sprites/goblinKing.png").convert_alpha(),
+        "Orc": pygame.image.load("sprites/orc.png").convert_alpha(),
+        "Skeleton": pygame.image.load("sprites/skeleton.png").convert_alpha(),
+        "Slime": pygame.image.load("sprites/slime.png").convert_alpha(),
+    }
+
     # Définir les zones de spawn pour chaque créature
     spawn_zones = {
         "Goblin": ((330, 650), (630, 950)),
@@ -90,14 +89,14 @@ def main():
         'intelligence': 0
     }
     # Initialiser le joueur et les créatures
-    joueur = contenu[5]
+    joueur = Joueur([TAILLE_CARTE // 2, TAILLE_CARTE // 2], "Lucas", "Guerrier", statistiques_joueur, {})
 
     # Initialiser les créatures avec des positions aléatoires dans leurs zones
-    creatures = contenu[4]
-    # for creature_name, ((x1, y1), (x2, y2)) in spawn_zones.items():
-        # pos = (random.randint(x1, x2), random.randint(y1, y2))
-        # creature = Creature(pos, creature_name, "Une créature", {"hp": 30,'hpmax':30, "mana": 0, "force": 10, "resistance": 5}, {"race": creature_name, "classe": "Monstre"})
-        # creatures.append(creature)
+    creatures = []
+    for creature_name, ((x1, y1), (x2, y2)) in spawn_zones.items():
+        pos = (random.randint(x1, x2), random.randint(y1, y2))
+        creature = Creature(pos, creature_name, "Une créature", {"hp": 30,'hpmax':30, "mana": 0, "force": 10, "resistance": 5}, {"race": creature_name, "classe": "Monstre"})
+        creatures.append(creature)
 
     # Initialiser les PNJ
     pnjs = [
@@ -115,10 +114,10 @@ def main():
                         surface.blit(tile, (x * tmx_data.tilewidth, y * tmx_data.tileheight))
 
     def draw_creatures(surface):
-        i = 0
-        for mob in creatures:
-            sprite = creature_sprites[i%8]
-            i += 1
+        for creature in creatures:
+            sprite = creature_sprites.get(creature.nom)
+            if sprite:
+                surface.blit(sprite, creature.pos)
 
     def draw_joueur(surface, joueur):
         surface.blit(player_texture, joueur.pos)

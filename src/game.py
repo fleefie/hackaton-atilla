@@ -75,7 +75,7 @@ def game_start():
                 ALAIDE = 1
                 for obj in objets:
                     print(f"{ALAIDE}: {obj}")
-                    objets.pop(int(check_entree("Choisissez-en un", int, range(1, nmbr+1, 1)))-1)
+                    objets.pop(1 + int(check_entree("Choisissez-en un", int, range(1, nmbr+1, 1))))
                     nmbr -= 1
                     ALAIDE += 1
             case 0:
@@ -107,7 +107,7 @@ def game_start():
                 ALAIDE = 1
                 for sort in sorts:
                     print(f"{ALAIDE}: {sort}")
-                    sorts.pop(int(check_entree("Choisissez-en un", int, range(1, nmbr+1, 1)))-1)
+                    sorts.pop(1 + int(check_entree("Choisissez-en un", int, range(1, nmbr+1, 1))))
                     nmbr -= 1
                     ALAIDE += 1
             case 0:
@@ -142,7 +142,7 @@ def game_start():
                 ALAIDE = 1
                 for race in races:
                     print(f"{ALAIDE}: {race}")
-                    races.pop(int(check_entree("Choisissez-en une", int, range(1, nmbr+1, 1))) -1)
+                    races.pop(1 + int(check_entree("Choisissez-en une", int, range(1, nmbr+1, 1))))
                     nmbr -= 1
                     ALAIDE += 1
             case 0:
@@ -178,7 +178,7 @@ def game_start():
                 ALAIDE = 1
                 for classe in classes:
                     print(f"{ALAIDE}: {classe}")
-                    classes.pop(int(check_entree("Choisissez-en une", int, range(1, nmbr+1, 1)))-1)
+                    classes.pop(1 + int(check_entree("Choisissez-en une", int, range(1, nmbr+1, 1))))
                     nmbr -= 1
                     ALAIDE += 1
             case 0:
@@ -201,24 +201,23 @@ def game_start():
                 intl = check_entree("Intelligence ?", int)
                 defn = check_entree("Defense ?", int)
                 hpmax = check_entree("PV ?", int)
-                mana = check_entree("mana ?", int)
                 ALAIDE = 1
                 for classe in classes:
                     print(f"{ALAIDE}: {classe}")
                     ALAIDE += 1
-                classemob = classes[int(check_entree("Choisissez la classe du mob", int, range(1, nmbr+1, 1)))-1]
+                classemob = classes[1 + int(check_entree("Choisissez la classe du mob", int, range(1, nmbr+1, 1)))]
                 for race in races:
                     print(f"{ALAIDE}: {race}")
                     ALAIDE += 1
-                racemob = races[int(check_entree("Choisissez la race du mob", int, range(1, nmbr+1, 1)))-1]
-                mobs.append(Creature((0,0), nom, description, {"force": stre, "mana":mana, "intelligence": intl, "resistance": defn, "hpmax": hpmax, "hp": hpmax}, {"description_longue": desclongue, "classe": classemob, "race": racemob}))
+                racemob = races[1 + int(check_entree("Choisissez la race du mob", int, range(1, nmbr+1, 1)))]
+                mobs.append(Creature((0,0), nom, description, {"force": stre, "intelligence": intl, "resistance": defn, "hpmax": hpmax, "hp": hpmax}, {"description_longue": desclongue, "classe": classemob, "race": racemob}))
                 print(f"Votre mob: {mobs[nmbr]}")
                 nmbr += 1
             case 3:
                 ALAIDE = 1
                 for mob in mobs:
                     print(f"{ALAIDE}: {mob}")
-                    mobs.pop(int(check_entree("Choisissez-en un", int, range(1, +1, 1)))-1)
+                    mobs.pop(1 + int(check_entree("Choisissez-en un", int, range(1, +1, 1))))
                     nmbr -= 1
                     ALAIDE += 1
             case 0:
@@ -233,17 +232,18 @@ def game_start():
     intl = check_entree("Intelligence ?", int)
     defn = check_entree("Defense ?", int)
     hpmax = check_entree("PV ?", int)
-    mana = check_entree("mana ?", int)
     ALAIDE = 1
     for classe in classes:
         print(f"{ALAIDE}: {classe}")
         ALAIDE += 1
-    classejoueur = classes[int(check_entree("Choisissez votre classe", int, range(1, nmbr+1, 1))) -1 ]
+    classejoueur = classes[1 + int(check_entree("Choisissez votre classe", int, range(1, nmbr+1, 1)))]
     for race in races:
         print(f"{ALAIDE}: {race}")
         ALAIDE += 1
-    racejoueur = races[int(check_entree("Choisissez votre race", int, range(1, nmbr+1, 1)))-1]
-    joueur = Joueur([960 // 2, 960 // 2], nom, description, {"force": stre, "mana":mana, "intelligence": intl, "resistance": defn, "hpmax": hpmax, "hp": hpmax}, {"classe": classejoueur, "race": racejoueur, "description_longue": desclongue})
+    racejoueur = races[1 + int(check_entree("Choisissez votre race", int, range(1, nmbr+1, 1)))]
+    joueur = Joueur((0,0), nom, description, {"force": stre, "intelligence": intl, "resistance": defn, "hpmax": hpmax, "hp": hpmax}, {"classe": classejoueur, "race": racejoueur, "description_longue": desclongue})
     print(f"Votre joueur: {joueur}")
 
     return [objets, sorts, races, classes, mobs, joueur]
+
+game_start()
