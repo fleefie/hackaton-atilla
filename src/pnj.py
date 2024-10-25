@@ -1,21 +1,27 @@
 from entitee import Entitee
+import pygame
 from objet import Armure
 from joueur import Joueur
 
 class Pnj(Entitee):
-    def __init__(self, pos: tuple[int, int], nom: str, desc: str, stats: dict, dialogue: str):
+    def __init__(self, pos: tuple[int, int], nom: str, desc: str, stats: dict, dialogue: str, sprite_path: str):
         super().__init__(pos, nom, desc, stats)
         self.dialogue = dialogue
+        self.sprite = pygame.image.load(sprite_path).convert_alpha()  # Charger le sprite du PNJ
 
-    def interaction(self,ent):
-        # Afficher la boite de dialogue
+    def draw(self, surface):
+        surface.blit(self.sprite, self.pos)  # Dessiner le sprite sur la surface
+
+    def interaction(self, ent):
+        # Afficher la boîte de dialogue
         print(self.nom)
         print(self.description)
-        print(self.dialogue) # TODO CHANGE ME
-        if self.statistiques["vendeur"] == True:
+        print(self.dialogue)  # TODO CHANGE ME
+        if self.statistiques.get("vendeur", False):
             # Afficher l'interface de vente
             for obj in self.inventaire:
-                print(obj) # TODO CHANGE ME
+                print(obj)  # TODO CHANGE ME
+
     
 def achat(joueur, pnj, objet):
     
