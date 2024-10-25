@@ -75,7 +75,7 @@ def game_start():
                 ALAIDE = 1
                 for obj in objets:
                     print(f"{ALAIDE}: {obj}")
-                    objets.pop(int(check_entree("Choisissez-en un", int, range(1, nmbr+1, 1))) - 1) 
+                    objets.pop(int(check_entree("Choisissez-en un", int, range(1, len(objets)+1, 1))) - 1) 
                     nmbr -= 1
                     ALAIDE += 1
             case 0:
@@ -107,7 +107,7 @@ def game_start():
                 ALAIDE = 1
                 for sort in sorts:
                     print(f"{ALAIDE}: {sort}")
-                    sorts.pop(int(check_entree("Choisissez-en un", int, range(1, nmbr+1, 1))) -1)
+                    sorts.pop(int(check_entree("Choisissez-en un", int, range(1, len(sorts)+1, 1))) -1)
                     nmbr -= 1
                     ALAIDE += 1
             case 0:
@@ -142,7 +142,7 @@ def game_start():
                 ALAIDE = 1
                 for race in races:
                     print(f"{ALAIDE}: {race}")
-                    races.pop(int(check_entree("Choisissez-en une", int, range(1, nmbr+1, 1)))-1)
+                    races.pop(int(check_entree("Choisissez-en une", int, range(1, len(races)+1, 1)))-1)
                     nmbr -= 1
                     ALAIDE += 1
             case 0:
@@ -178,7 +178,7 @@ def game_start():
                 ALAIDE = 1
                 for classe in classes:
                     print(f"{ALAIDE}: {classe}")
-                    classes.pop(int(check_entree("Choisissez-en une", int, range(1, nmbr+1, 1))) - 1)
+                    classes.pop(int(check_entree("Choisissez-en une", int, range(1, len(classes)+1, 1))) - 1)
                     nmbr -= 1
                     ALAIDE += 1
             case 0:
@@ -205,11 +205,11 @@ def game_start():
                 for classe in classes:
                     print(f"{ALAIDE}: {classe}")
                     ALAIDE += 1
-                classemob = classes[int(check_entree("Choisissez la classe du mob", int, range(1, nmbr+1, 1))) - 1]
+                classemob = classes[int(check_entree("Choisissez la classe du mob", int, range(1, len(classes)+1, 1))) - 1]
                 for race in races:
                     print(f"{ALAIDE}: {race}")
                     ALAIDE += 1
-                racemob = races[int(check_entree("Choisissez la race du mob", int, range(1, nmbr+1, 1))) - 1]
+                racemob = races[int(check_entree("Choisissez la race du mob", int, range(1, len(races)+1, 1))) - 1]
                 mobs.append(Creature((0,0), nom, description, {"force": stre, "intelligence": intl, "resistance": defn, "hpmax": hpmax, "hp": hpmax}, {"description_longue": desclongue, "classe": classemob, "race": racemob}))
                 print(f"Votre mob: {mobs[nmbr]}")
                 nmbr += 1
@@ -236,13 +236,35 @@ def game_start():
     for classe in classes:
         print(f"{ALAIDE}: {classe}")
         ALAIDE += 1
-    classejoueur = classes[int(check_entree("Choisissez votre classe", int, range(1, nmbr+1, 1))) - 1]
+    classejoueur = classes[int(check_entree("Choisissez votre classe", int, range(1, len(classes)+1, 1))) - 1]
     for race in races:
         print(f"{ALAIDE}: {race}")
         ALAIDE += 1
     racejoueur = races[int(check_entree("Choisissez votre race", int, range(1, nmbr+1, 1)))-1]
     joueur = Joueur((0,0), nom, description, {"force": stre, "intelligence": intl, "resistance": defn, "hpmax": hpmax, "hp": hpmax}, {"classe": classejoueur, "race": racejoueur, "description_longue": desclongue})
     print(f"Votre joueur: {joueur}")
+
+    print("=======================")
+    print("RECAP")
+    print("=======================")
+
+    print("\n\nOBJETS\n\n")
+    for obj in objets:
+        print(f"{obj}")
+    print("\n\nSORTS\n\n")
+    for sort in sorts:
+        print(f"{sort}")
+    print("\n\nRACES\n\n")
+    for race in races:
+        print(f"{race}")
+    print("\n\nCLASSES\n\n")
+    for classe in classes:
+        print(f"classe")
+    print("\n\nMOBS\n\n")
+    for mob in mobs:
+        print(f"{mob}")
+    print("\n\n J O U E U R \n\n")
+    print(f"{joueur}")
 
     return [objets, sorts, races, classes, mobs, joueur]
 
