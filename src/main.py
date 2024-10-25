@@ -46,13 +46,13 @@ def main():
     joueur = Joueur([TAILLE_CARTE // 2, TAILLE_CARTE // 2], "Lucas", "Guerrier", statistiques_joueur,{})
 
 
-       statistiques_ennemi = {
+    statistiques_ennemi = {
         'hp': 50,
         'hpmax': 50,
         'mana': 0,
         'force': 8,
         'intelligence': 0
-    }
+        }
  
 def __init__(self, pos: tuple[int, int], nom: str, desc: str, stats: dict, lore: dict):
     creatures = [
