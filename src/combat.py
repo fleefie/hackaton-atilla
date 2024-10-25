@@ -79,7 +79,21 @@ class Combat:
                 break
 
             elif choix == '3':
-                print("Utilisation d'objets non implémentée.")
+                                # Si le joueur choisit d'utiliser un objet
+                self.joueur.afficher_inventaire()
+                while True:
+                    try:
+                        objet_choisi = int(input("Choisissez un objet à utiliser (entrez un numéro) : ")) - 1
+                        if 0 <= objet_choisi < len(self.joueur.inventaire):
+                            objet = self.joueur.inventaire[objet_choisi]
+                            if objet.utiliser:
+                                objet.utiliser(objet, self.joueur)  # Utilise l'objet sur le joueur
+                                self.joueur.inventaire.pop(objet_choisi)  # Retire l'objet de l'inventaire
+                            break
+                        else:
+                            print("Choix invalide.")
+                    except ValueError:
+                        print("Veuillez entrer un numéro valide.")
                 break
 
             elif choix == '4':
